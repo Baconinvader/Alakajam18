@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnn8ajthhkgee"]
+
+[ext_resource type="PackedScene" uid="uid://bb26y78ash1eg" path="res://entities/Creature.tscn" id="1_rwr4e"]
+[ext_resource type="Script" path="res://entities/Player.gd" id="2_dfd5j"]
+
+[node name="Player" instance=ExtResource("1_rwr4e")]
+script = ExtResource("2_dfd5j")
+speed = 128.0
+direction = 0.0
+fov = 80.0
+
+[node name="camera" type="Camera2D" parent="." index="1"]
