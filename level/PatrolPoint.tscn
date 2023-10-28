@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://cetpw8s7i54c4"]
+
+[ext_resource type="Script" path="res://level/PatrolPoint.gd" id="1_cjay0"]
+[ext_resource type="PackedScene" uid="uid://jf2x5l287h4w" path="res://entities/Entity.tscn" id="1_gj461"]
+[ext_resource type="Texture2D" uid="uid://do2ovlcyq73pq" path="res://assets/visual/tile_patrol.png" id="3_s4oej"]
+
+[node name="PatrolPoint" groups=["patrol_points"] instance=ExtResource("1_gj461")]
+script = ExtResource("1_cjay0")
+
+[node name="sprite" parent="." index="0"]
+texture = ExtResource("3_s4oej")
+
+[node name="collision" parent="." index="1"]
+shape = null

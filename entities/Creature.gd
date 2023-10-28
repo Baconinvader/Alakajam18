@@ -9,7 +9,7 @@ class_name Creature
 
 
 var target_path:Array
-var state
+var target:Entity
 
 func get_ray_results(pos:Vector2):
 	var space_state = get_world_2d().direct_space_state
@@ -32,17 +32,25 @@ func can_see_point(pos:Vector2) -> bool:
 	var v2 = direction + (fov/2)
 	var angle = diff.angle()
 
-	var ray_results = get_ray_results(pos)
-
 	if g.angle_in_bounds(angle, v1, v2):
 		return true
 	else:
 		return false
 
+func can_see(entity:Entity) -> bool:
+	
+	if not can_see_point(entity.position):
+		return false
+		
+	if not get_ray_entity(entity):
+		return false
+		
+	return true
+
 func set_target_pos(pos:Vector2):
 	
 	var path_raw:PackedInt64Array = g.level.nav.get_id_path(g.level.nav.get_closest_point(position), g.level.nav.get_closest_point(pos))
-	print(position," -> ",pos," ",path_raw)
+	#print(position," -> ",pos," ",path_raw)
 	
 	var path:Array = []
 	var tile:TileDat
@@ -50,14 +58,20 @@ func set_target_pos(pos:Vector2):
 		tile = g.level.nav_map[id]
 		path.append(tile.position)
 		
-	print(tile.tile_name," ",tile.position)
+	#print(tile.tile_name," ",tile.position)
 		
+	path.remove_at(0)
 	target_path = path
 	$target.position = pos
 	
 func set_target(entity:Entity):
-	return set_target_pos(entity.position)
-	
+	target = entity
+	if target:
+		return set_target_pos(entity.position)
+	else:
+		target_path.clear()
+		return null
+		
 func _draw():
 	var v1 = direction - (fov/2)
 	var v2 = direction + (fov/2)
@@ -77,10 +91,16 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if target_path:
+		
 		var diff:Vector2 = (target_path[0] - position)
 		var dist:float = diff.length()
+		
+		print(target_path," (",target_path.size(),") ",dist)
+		
 		if dist < 2:
 			target_path.remove_at(0)
+			if target_path.is_empty():
+				on_reached_target()
 		else:
 			var move_vec:Vector2
 			if dist >= speed*delta:
@@ -88,6 +108,9 @@ func _process(delta):
 			else:
 				move_vec = diff.normalized()/(speed*delta)
 			move(move_vec, delta)
+			
+func on_reached_target():
+	target = null
 		
 func move(move_vec:Vector2, delta:float):
 	if move_vec != Vector2.ZERO:

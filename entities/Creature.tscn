@@ -8,7 +8,7 @@
 script = ExtResource("2_sd18e")
 speed = 128.0
 direction = 0.0
-fov = 3.141
+fov = 1.55
 view_range = 512.0
 
 [node name="target" type="Sprite2D" parent="." index="2"]

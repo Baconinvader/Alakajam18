@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bb26y78ash1eg" path="res://entities/Creature.tscn" id="1_rwr4e"]
 [ext_resource type="Script" path="res://entities/Player.gd" id="2_dfd5j"]
 
-[node name="Player" instance=ExtResource("1_rwr4e")]
+[node name="Player" groups=["alerters"] instance=ExtResource("1_rwr4e")]
 script = ExtResource("2_dfd5j")
 fov = 1.6
 

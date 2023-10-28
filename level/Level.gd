@@ -12,11 +12,16 @@ var size_y = 0
 
 var nav = AStar2D.new()
 var nav_map = {}
+var tileset:TileSet
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	tileset = $tiles.tile_set
+	generate_nav()
+	setup_patrols()
+	
+func generate_nav():
 	var tile_indices = $tiles.get_used_cells(0)
-	var tileset:TileSet = $tiles.tile_set
 	for index in tile_indices:
 		print(index)
 		if index.x < offset_x:
@@ -37,21 +42,21 @@ func _ready():
 	for x in range(offset_x, size_x+offset_x):
 		tiles.append([])
 		for y in range(offset_y, size_y+offset_y):
-			
-			var tile:TileDat = TileDat.new()
-			tiles[-1].append(tile)
-			
 			var dat:TileData = $tiles.get_cell_tile_data (0, Vector2i(x,y) )
-			var tile_name = dat.get_custom_data ("name")
-				
 			
+				
+			var tile:TileDat = TileDat.create_from_tile_dat(dat)
+			tiles[-1].append(tile)
 			
 			var tile_pos:Vector2 = Vector2(tileset.tile_size.x*(x+0.5), tileset.tile_size.y*(y+0.5) )
 			tile.position = tile_pos
-			tile.tile_name = tile_name
+			
 			
 			var debug_sprite = Sprite2D.new()
-			debug_sprite.texture = load("res://assets/visual/target.png")
+			if tile.is_patrol_point:
+				debug_sprite.texture = preload("res://assets/visual/tile_patrol.png")
+			else:
+				debug_sprite.texture = preload("res://assets/visual/target.png")
 			debug_sprite.position = tile_pos
 			add_child(debug_sprite)
 			
@@ -91,6 +96,22 @@ func _ready():
 						nav.connect_points(point_id, check_tile.nav_id )
 						print(point_id," -> ", check_tile.nav_id)
 				point_id += 1
+	
+func setup_patrols():
+	for patrol_point in get_tree().get_nodes_in_group("patrol_points"):
+		patrol_point.setup()
+		
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.start_patrol()
+	
+	
+	
+func get_tile_at(pos:Vector2) -> TileDat:
+	var tx:int = (pos.x/tileset.tile_size.x) + offset_x
+	var ty:int = (pos.y/tileset.tile_size.y) + offset_y
+	
+	var tile:TileDat
+	return tile
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
