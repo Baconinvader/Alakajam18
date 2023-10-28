@@ -43,11 +43,11 @@ func update_state(delta):
 					state_change(attention_entity, CreatureState.HOSTILE)
 				else:
 					var angle = (target.position-position).angle()
-					direction = angle
+					target_direction = angle
 					
 			elif state == CreatureState.HOSTILE:
 				var angle = (target.position-position).angle()
-				direction = angle
+				target_direction = angle
 				
 
 		else:

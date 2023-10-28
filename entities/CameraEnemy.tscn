@@ -6,6 +6,17 @@
 
 [node name="CameraEnemy" instance=ExtResource("1_t81v5")]
 script = ExtResource("2_3x1h4")
+reverse_patrol = null
+suspicion_time = null
+hostile_time = null
+attack_type = null
+fire_cooldown = null
+fire_time = null
+alert_time = null
+damage = null
+direction = null
+view_range = null
+max_health = null
 
 [node name="sprite" parent="." index="0"]
 texture = ExtResource("2_hx7mn")

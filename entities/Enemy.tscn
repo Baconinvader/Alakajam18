@@ -11,16 +11,19 @@ radius = 16.0
 [node name="Enemy" groups=["enemies"] instance=ExtResource("1_vg2aq")]
 motion_mode = 1
 script = ExtResource("2_dsyds")
-reverse_patrol = false
-suspicion_time = 0.5
-hostile_time = 0.5
-attack_type = "ranged"
+reverse_patrol = null
+suspicion_time = null
+hostile_time = null
+attack_type = null
 min_range = 196
-fire_cooldown = 2.0
-fire_time = 1.5
-alert_time = 0.4
-damage = 1
+fire_cooldown = null
+fire_time = null
+alert_time = null
+damage = null
 speed = 100.0
+direction = null
+view_range = null
+max_health = null
 
 [node name="sprite" parent="." index="0"]
 texture = ExtResource("2_ynike")

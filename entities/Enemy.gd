@@ -198,7 +198,7 @@ func update_state(delta):
 	else:
 		if next_state == CreatureState.FIRING:
 			var angle = (target.position-position).angle()
-			direction = angle
+			target_direction = angle
 	
 func _physics_process(delta):
 	update_state(delta)

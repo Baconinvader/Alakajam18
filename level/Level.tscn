@@ -19,6 +19,17 @@ layer_0/tile_data = PackedInt32Array(65537, 65538, 0, 65541, 65538, 0, 65545, 65
 [node name="Enemy" parent="." node_paths=PackedStringArray("starting_patrol_point") instance=ExtResource("3_ptxll")]
 position = Vector2(352, -96)
 starting_patrol_point = NodePath("../patrol1/1")
+reverse_patrol = null
+suspicion_time = null
+hostile_time = null
+attack_type = null
+fire_cooldown = null
+fire_time = null
+alert_time = null
+damage = null
+direction = null
+view_range = null
+max_health = null
 
 [node name="CameraEnemy" parent="." instance=ExtResource("4_0yuss")]
 position = Vector2(160, 288)

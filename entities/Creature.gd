@@ -5,6 +5,8 @@ class_name Creature
 @export var speed = 128.0
 @export var direction:float = 0.0:set=_set_direction
 @onready var target_direction:float = direction
+@export var turn_speed = PI
+
 @export var fov:float = 80.0
 @export var view_range:float = 512.0
 
@@ -12,8 +14,21 @@ class_name Creature
 @onready var health:int = max_health
 
 var target_path:Array
-var last_target_pos
+var last_target_pos: set=_set_last_target_pos
 var target:Entity
+
+func _set_last_target_pos(val):
+	
+	if val:
+		if target_path.size() > 1:
+			target_direction = (target_path[1]-val).normalized().angle()
+		else:
+			target_direction = 0
+	else:
+		target_direction = 0
+			
+			
+	last_target_pos = val
 
 func _set_direction(val:float):
 	direction = val
@@ -70,7 +85,7 @@ func set_target_pos(pos:Vector2):
 	if is_nav_disabled:
 		current_tile.set_nav_enabled(false)
 	
-	print(position," -> ",pos," ",path_raw)
+	#print(position," -> ",pos," ",path_raw)
 	
 	var path:Array = []
 	var tile:TileDat
@@ -80,16 +95,23 @@ func set_target_pos(pos:Vector2):
 		
 
 	#path.remove_at(0)
-	print(target_path)
+	#print(target_path)
 	target_path = path
 
 func set_target(entity:Entity):
 	if target != entity:
 		last_target_pos = null
 		
+	var new_target:bool = false
+	if not target and entity:
+		new_target = true
+		
 	target = entity
 	if target:
-		return set_target_pos(entity.position)
+		
+		var res = set_target_pos(entity.position)
+		
+		return res
 	else:
 		target_path.clear()
 		return null
@@ -100,10 +122,13 @@ func _draw():
 	var e1 = Vector2.from_angle((v1))
 	var e2 = Vector2.from_angle((v2))
 	
+	var e3 = Vector2.from_angle((target_direction))
+	
 	var line_length:float = view_range
 	
 	draw_line(Vector2.ZERO, e1 * line_length, Color.GREEN, 2 )
 	draw_line(Vector2.ZERO, e2 * line_length, Color.RED, 2 )
+	draw_line(Vector2.ZERO, e3 * 128, Color.YELLOW, 2 )
 	
 	for point in target_path:
 		var rel_point = point-position
@@ -116,14 +141,17 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if not g.angles_similar(direction, target_direction):
+		direction = g.rotate_to(direction, target_direction, turn_speed *delta)
+	
 	if target_path:
 		
 		var diff:Vector2 = (target_path[0] - position)
 		var dist:float = diff.length()
 		
 		
-		var close_dist:float = 0.5
-		if dist < 1.5:
+		var close_dist:float = 1.5
+		if dist < close_dist:
 			last_target_pos = target_path[0]
 			target_path.remove_at(0)
 			if target_path.is_empty():
@@ -136,20 +164,32 @@ func _process(delta):
 		else:
 			var move_vec:Vector2
 			
-			if last_target_pos and target_path[0] != last_target_pos:
-				diff = target_path[0] - last_target_pos
+			#if last_target_pos and target_path[0] != last_target_pos:
+			#	diff = target_path[0] - last_target_pos
 				
+
 			#no diag
-			if abs(diff.x) > abs(diff.y):
+			if abs(diff.x):
 				diff.y = 0
 			else:
 				diff.x = 0
 				
-			if dist >= close_dist*speed*delta:
-				move_vec = diff.normalized()
+			target_direction = diff.normalized().angle()
+			
+			if not g.angles_similar(direction, target_direction):
+				
+				
+				print("no:",direction, " ",target_direction)
 			else:
-				move_vec = (close_dist*diff.normalized()) /(speed*delta)
-			move(move_vec, delta)
+				print("yes:",direction, " ",target_direction)
+				
+				dist = diff.length()
+				
+				if dist >= close_dist*speed*delta:
+					move_vec = diff.normalized()
+				else:
+					move_vec = (dist*diff.normalized()) /(speed*delta)
+				move(move_vec, delta)
 			
 func on_reached_target():
 	target = null
@@ -157,11 +197,9 @@ func on_reached_target():
 		
 func move(move_vec:Vector2, delta:float):
 	if move_vec != Vector2.ZERO:
-		direction = move_vec.normalized().angle()
 		queue_redraw()
 		
 		move_vec *= speed*delta
-		print(move_vec)
 		
 		var res:KinematicCollision2D = move_and_collide(move_vec, true)
 		if res and res.get_collider():
