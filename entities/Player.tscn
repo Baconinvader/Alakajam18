@@ -5,8 +5,6 @@
 
 [node name="Player" instance=ExtResource("1_rwr4e")]
 script = ExtResource("2_dfd5j")
-speed = 128.0
-direction = 0.0
-fov = 80.0
+fov = 1.6
 
 [node name="camera" type="Camera2D" parent="." index="1"]

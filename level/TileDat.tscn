@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://chl5a6x15irn2"]
+
+[ext_resource type="Script" path="res://level/TileDat.gd" id="1_7ps06"]
+
+[node name="TileDat" type="Node"]
+script = ExtResource("1_7ps06")
