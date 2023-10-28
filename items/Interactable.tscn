@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dsmwvkxrrx8cx"]
+
+[ext_resource type="PackedScene" uid="uid://jf2x5l287h4w" path="res://entities/Entity.tscn" id="1_68afa"]
+[ext_resource type="Script" path="res://items/Interactable.gd" id="2_5v671"]
+[ext_resource type="Texture2D" uid="uid://dqkpdaebthmyq" path="res://assets/visual/icons/interact.png" id="2_sa2py"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cifrd"]
+radius = 64.0
+
+[node name="Interactable" instance=ExtResource("1_68afa")]
+script = ExtResource("2_5v671")
+
+[node name="interact_area" type="Area2D" parent="." index="0"]
+
+[node name="shape" type="CollisionShape2D" parent="interact_area" index="0"]
+shape = SubResource("CircleShape2D_cifrd")
+
+[node name="icon" type="Node2D" parent="." index="3"]
+visible = false
+position = Vector2(0, -40)
+
+[node name="float_timer" type="Timer" parent="icon" index="0"]
+wait_time = 2.0
+autostart = true
+
+[node name="sprite" type="Sprite2D" parent="icon" index="1"]
+texture = ExtResource("2_sa2py")
+
+[connection signal="body_entered" from="interact_area" to="." method="_on_interact_area_body_entered"]
+[connection signal="body_exited" from="interact_area" to="." method="_on_interact_area_body_exited"]
+[connection signal="body_shape_entered" from="interact_area" to="." method="_on_interact_area_body_shape_entered"]

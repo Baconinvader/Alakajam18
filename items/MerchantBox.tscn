@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdyw0a2kys132"]
+
+[ext_resource type="PackedScene" uid="uid://dsmwvkxrrx8cx" path="res://items/Interactable.tscn" id="1_msadv"]
+[ext_resource type="Script" path="res://items/MerchantBox.gd" id="2_6tcjf"]
+[ext_resource type="Texture2D" uid="uid://c60s8d5178jy7" path="res://assets/visual/merchant_box.png" id="2_avncp"]
+
+[node name="MerchantBox" instance=ExtResource("1_msadv")]
+script = ExtResource("2_6tcjf")
+
+[node name="interact_area" parent="." index="0"]
+disable_mode = 1
+
+[node name="sprite" parent="." index="1"]
+texture = ExtResource("2_avncp")

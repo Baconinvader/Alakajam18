@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://cb034yo0sonaa"]
+
+[ext_resource type="PackedScene" uid="uid://bbwhiusxcraa1" path="res://entities/Enemy.tscn" id="1_t81v5"]
+[ext_resource type="Script" path="res://entities/CameraEnemy.gd" id="2_3x1h4"]
+[ext_resource type="Texture2D" uid="uid://yfxa3fi6400g" path="res://assets/visual/camera.png" id="2_hx7mn"]
+
+[node name="CameraEnemy" instance=ExtResource("1_t81v5")]
+script = ExtResource("2_3x1h4")
+
+[node name="sprite" parent="." index="0"]
+texture = ExtResource("2_hx7mn")

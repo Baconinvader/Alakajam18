@@ -3,13 +3,21 @@ extends "res://entities/Entity.gd"
 class_name Creature
 
 @export var speed = 128.0
-@export var direction:float = 0.0
+@export var direction:float = 0.0:set=_set_direction
+@onready var target_direction:float = direction
 @export var fov:float = 80.0
 @export var view_range:float = 512.0
 
+@export var max_health:int = 5
+@onready var health:int = max_health
 
 var target_path:Array
+var last_target_pos
 var target:Entity
+
+func _set_direction(val:float):
+	direction = val
+	queue_redraw()
 
 func get_ray_results(pos:Vector2):
 	var space_state = get_world_2d().direct_space_state
@@ -27,6 +35,10 @@ func get_ray_entity(entity:Entity) -> bool:
 
 func can_see_point(pos:Vector2) -> bool:
 	var diff = pos-self.position
+	
+	var dist:float = diff.length()
+	if dist >= view_range:
+		return false
 	
 	var v1 = direction - (fov/2)
 	var v2 = direction + (fov/2)
@@ -49,8 +61,16 @@ func can_see(entity:Entity) -> bool:
 
 func set_target_pos(pos:Vector2):
 	
-	var path_raw:PackedInt64Array = g.level.nav.get_id_path(g.level.nav.get_closest_point(position), g.level.nav.get_closest_point(pos))
-	#print(position," -> ",pos," ",path_raw)
+	
+	#g.level.nav.get_closest_point(position)
+	var is_nav_disabled:bool = g.level.nav.is_point_disabled(current_tile.nav_id)
+	if is_nav_disabled:
+		current_tile.set_nav_enabled(true)
+	var path_raw:PackedInt64Array = g.level.nav.get_id_path(current_tile.nav_id, g.level.nav.get_closest_point(pos))
+	if is_nav_disabled:
+		current_tile.set_nav_enabled(false)
+	
+	print(position," -> ",pos," ",path_raw)
 	
 	var path:Array = []
 	var tile:TileDat
@@ -58,13 +78,15 @@ func set_target_pos(pos:Vector2):
 		tile = g.level.nav_map[id]
 		path.append(tile.position)
 		
-	#print(tile.tile_name," ",tile.position)
-		
-	path.remove_at(0)
+
+	#path.remove_at(0)
+	print(target_path)
 	target_path = path
-	$target.position = pos
-	
+
 func set_target(entity:Entity):
+	if target != entity:
+		last_target_pos = null
+		
 	target = entity
 	if target:
 		return set_target_pos(entity.position)
@@ -80,12 +102,16 @@ func _draw():
 	
 	var line_length:float = view_range
 	
-	draw_line(Vector2.ZERO, e1 * line_length, Color.RED, 2 )
+	draw_line(Vector2.ZERO, e1 * line_length, Color.GREEN, 2 )
 	draw_line(Vector2.ZERO, e2 * line_length, Color.RED, 2 )
+	
+	for point in target_path:
+		var rel_point = point-position
+		draw_circle(rel_point, 16, Color.DARK_RED)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	super._ready()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -95,22 +121,39 @@ func _process(delta):
 		var diff:Vector2 = (target_path[0] - position)
 		var dist:float = diff.length()
 		
-		print(target_path," (",target_path.size(),") ",dist)
 		
-		if dist < 2:
+		var close_dist:float = 0.5
+		if dist < 1.5:
+			last_target_pos = target_path[0]
 			target_path.remove_at(0)
 			if target_path.is_empty():
 				on_reached_target()
+			#else:
+				#refresh path
+				#set_target_pos(target_path[-1])
+				#target_path.remove_at(0)
+
 		else:
 			var move_vec:Vector2
-			if dist >= speed*delta:
+			
+			if last_target_pos and target_path[0] != last_target_pos:
+				diff = target_path[0] - last_target_pos
+				
+			#no diag
+			if abs(diff.x) > abs(diff.y):
+				diff.y = 0
+			else:
+				diff.x = 0
+				
+			if dist >= close_dist*speed*delta:
 				move_vec = diff.normalized()
 			else:
-				move_vec = diff.normalized()/(speed*delta)
+				move_vec = (close_dist*diff.normalized()) /(speed*delta)
 			move(move_vec, delta)
 			
 func on_reached_target():
 	target = null
+	last_target_pos = null
 		
 func move(move_vec:Vector2, delta:float):
 	if move_vec != Vector2.ZERO:
@@ -118,6 +161,21 @@ func move(move_vec:Vector2, delta:float):
 		queue_redraw()
 		
 		move_vec *= speed*delta
+		print(move_vec)
 		
-		var res = move_and_collide(move_vec)
+		var res:KinematicCollision2D = move_and_collide(move_vec, true)
+		if res and res.get_collider():
+			pass
+		else:
+			position += move_vec
 		
+		update_current_tile()
+		
+func change_health(amount:int):
+	health += amount
+	health = clampi(health, 0, max_health)
+	if not health:
+		die()
+		
+func die():
+	queue_free()

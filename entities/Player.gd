@@ -2,6 +2,9 @@ extends Creature
 
 class_name Player
 
+var money:int = 0
+var is_being_chased:bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -25,6 +28,13 @@ func _process(delta):
 		move_vec += Vector2.RIGHT
 	
 	move(move_vec.normalized(), delta)
+		
+func _physics_process(_delta):
+	is_being_chased = false
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if enemy.state == Enemy.CreatureState.FIRING or Enemy.CreatureState.HOSTILE:
+			is_being_chased = true
+			break
 		
 func _input(event):
 	var me:InputEventMouseButton = event as InputEventMouseButton

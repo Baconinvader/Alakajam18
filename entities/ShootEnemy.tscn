@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c102gnmu0u0ti"]
+
+[ext_resource type="PackedScene" uid="uid://bbwhiusxcraa1" path="res://entities/Enemy.tscn" id="1_f3671"]
+
+[sub_resource type="GDScript" id="GDScript_s66q6"]
+script/source = "extends \"res://entities/Enemy.gd\"
+
+@export var shoot_time = 1.0
+"
+
+[node name="ShootEnemy" instance=ExtResource("1_f3671")]
+script = SubResource("GDScript_s66q6")
+shoot_time = 1.0
+max_health = null

@@ -1,34 +1,74 @@
-[gd_scene load_steps=5 format=3 uid="uid://bbwhiusxcraa1"]
+[gd_scene load_steps=6 format=3 uid="uid://bbwhiusxcraa1"]
 
 [ext_resource type="PackedScene" uid="uid://bb26y78ash1eg" path="res://entities/Creature.tscn" id="1_vg2aq"]
 [ext_resource type="Script" path="res://entities/Enemy.gd" id="2_dsyds"]
 [ext_resource type="Texture2D" uid="uid://bpji2q0mcvt24" path="res://assets/visual/spr_test_enemy.png" id="2_ynike"]
 [ext_resource type="Texture2D" uid="uid://cvaxxavh8koky" path="res://assets/visual/icons/alert.png" id="4_dv3if"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_qjn22"]
+radius = 16.0
+
 [node name="Enemy" groups=["enemies"] instance=ExtResource("1_vg2aq")]
+motion_mode = 1
 script = ExtResource("2_dsyds")
 reverse_patrol = false
+suspicion_time = 0.5
+hostile_time = 0.5
+attack_type = "ranged"
+min_range = 196
+fire_cooldown = 2.0
+fire_time = 1.5
+alert_time = 0.4
+damage = 1
 speed = 100.0
 
 [node name="sprite" parent="." index="0"]
 texture = ExtResource("2_ynike")
 
-[node name="alert_progress" type="ProgressBar" parent="." index="3"]
+[node name="collision" parent="." index="1"]
+shape = SubResource("CircleShape2D_qjn22")
+
+[node name="alert_progress" type="ProgressBar" parent="." index="2"]
 offset_left = -56.0
 offset_top = -56.0
 offset_right = 56.0
 offset_bottom = -40.0
 max_value = 1.0
 step = 0.1
+value = 0.5
+show_percentage = false
+
+[node name="health_bar" type="ProgressBar" parent="." index="3"]
+modulate = Color(0, 0.643137, 0, 1)
+offset_left = -56.0
+offset_top = -80.0
+offset_right = 56.0
+offset_bottom = -64.0
+max_value = 10.0
+step = 1.0
+value = 5.0
 show_percentage = false
 
 [node name="alert_icon" type="Sprite2D" parent="." index="4"]
-position = Vector2(0, -96)
+position = Vector2(0, -88)
 texture = ExtResource("4_dv3if")
 
 [node name="state_label" type="Label" parent="." index="5"]
-offset_left = -48.0
+offset_left = -64.0
 offset_top = 40.0
-offset_right = 40.0
-offset_bottom = 66.0
+offset_right = 60.0
+offset_bottom = 77.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
 text = "[NOSTATE]"
+horizontal_alignment = 1
+
+[node name="fire_cooldown" type="Timer" parent="." index="6"]
+one_shot = true
+autostart = true
+
+[node name="stuck_timer" type="Timer" parent="." index="7"]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="stuck_timer" to="." method="_on_stuck_timer_timeout"]

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2s0j378mal7a"]
+
+[ext_resource type="PackedScene" uid="uid://dooqp1rjphbyb" path="res://items/Item.tscn" id="1_l4hik"]
+[ext_resource type="Texture2D" uid="uid://c3qdbd4mhx2f6" path="res://assets/visual/item/coins.png" id="2_rx7k5"]
+
+[node name="Coins" instance=ExtResource("1_l4hik")]
+item_name = "Coins"
+texture = ExtResource("2_rx7k5")

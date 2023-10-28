@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://1j0dwesoxw3"]
+
+[ext_resource type="Script" path="res://ui/HealthView.gd" id="1_w0wi5"]
+
+[node name="HealthView" type="Control"]
+layout_mode = 3
+anchor_right = 0.278
+anchor_bottom = 0.198
+offset_right = -0.256042
+offset_bottom = -0.304016
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w0wi5")
+
+[node name="list" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
