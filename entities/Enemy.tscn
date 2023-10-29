@@ -1,9 +1,51 @@
-[gd_scene load_steps=6 format=3 uid="uid://bbwhiusxcraa1"]
+[gd_scene load_steps=12 format=3 uid="uid://bbwhiusxcraa1"]
 
 [ext_resource type="PackedScene" uid="uid://bb26y78ash1eg" path="res://entities/Creature.tscn" id="1_vg2aq"]
 [ext_resource type="Script" path="res://entities/Enemy.gd" id="2_dsyds"]
 [ext_resource type="Texture2D" uid="uid://bpji2q0mcvt24" path="res://assets/visual/spr_test_enemy.png" id="2_ynike"]
 [ext_resource type="Texture2D" uid="uid://cvaxxavh8koky" path="res://assets/visual/icons/alert.png" id="4_dv3if"]
+[ext_resource type="Texture2D" uid="uid://chmyikquanuuh" path="res://assets/visual/muzzle_flash.png" id="5_qgdu4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0w22n"]
+atlas = ExtResource("5_qgdu4")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33ho5"]
+atlas = ExtResource("5_qgdu4")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cijxh"]
+atlas = ExtResource("5_qgdu4")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcv1g"]
+atlas = ExtResource("5_qgdu4")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6fqei"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0w22n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_33ho5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cijxh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mcv1g")
+}],
+"loop": true,
+"name": &"fire",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qjn22"]
 radius = 16.0
@@ -20,10 +62,19 @@ fire_cooldown = 2.0
 fire_time = 1.5
 alert_time = 0.4
 damage = 1
+base_speed = 96
+chase_speed = 128
 speed = 100.0
 
 [node name="sprite" parent="." index="0"]
 texture = ExtResource("2_ynike")
+
+[node name="muzzle_flash" type="AnimatedSprite2D" parent="sprite" index="0"]
+visible = false
+position = Vector2(56, 4)
+sprite_frames = SubResource("SpriteFrames_6fqei")
+animation = &"fire"
+frame_progress = 0.952176
 
 [node name="collision" parent="." index="1"]
 shape = SubResource("CircleShape2D_qjn22")
@@ -50,10 +101,13 @@ value = 5.0
 show_percentage = false
 
 [node name="alert_icon" type="Sprite2D" parent="." index="4"]
-position = Vector2(0, -88)
+visible = false
+position = Vector2(0, -64)
+scale = Vector2(0.75, 0.75)
 texture = ExtResource("4_dv3if")
 
 [node name="state_label" type="Label" parent="." index="5"]
+visible = false
 offset_left = -64.0
 offset_top = 40.0
 offset_right = 60.0
@@ -71,4 +125,6 @@ autostart = true
 wait_time = 2.0
 one_shot = true
 
+[connection signal="animation_finished" from="sprite/muzzle_flash" to="." method="_on_muzzle_flash_animation_finished"]
+[connection signal="animation_looped" from="sprite/muzzle_flash" to="." method="_on_muzzle_flash_animation_looped"]
 [connection signal="timeout" from="stuck_timer" to="." method="_on_stuck_timer_timeout"]

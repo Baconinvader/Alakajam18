@@ -85,6 +85,7 @@ var level:Level
 var player:Player: set=_set_player
 var inventory:Inventory
 
+var max_time:float = 25.0
 var time_left:float = 0
 var time_decrease_speed = 1.0
 

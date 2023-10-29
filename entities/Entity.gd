@@ -28,7 +28,7 @@ func _ready():
 func setup():
 	update_current_tile()
 
-func obscure_nav():
+func obscure_nav(disable:bool=true):
 	var col_shape:Shape2D = $collision.shape
 	var rect:Rect2 = col_shape.get_rect()
 
@@ -51,7 +51,7 @@ func obscure_nav():
 				continue
 					
 			tile = g.level.tiles[x][y]
-			tile.set_nav_disabled(true)
+			tile.set_nav_disabled(disable)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

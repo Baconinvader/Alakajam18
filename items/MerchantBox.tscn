@@ -1,8 +1,123 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdyw0a2kys132"]
+[gd_scene load_steps=10 format=3 uid="uid://cdyw0a2kys132"]
 
 [ext_resource type="PackedScene" uid="uid://dsmwvkxrrx8cx" path="res://items/Interactable.tscn" id="1_msadv"]
 [ext_resource type="Script" path="res://items/MerchantBox.gd" id="2_6tcjf"]
-[ext_resource type="Texture2D" uid="uid://c60s8d5178jy7" path="res://assets/visual/merchant_box.png" id="2_avncp"]
+[ext_resource type="Texture2D" uid="uid://yu2jl677cglt" path="res://assets/visual/merchant_box_door_left.png" id="3_rrff2"]
+[ext_resource type="Texture2D" uid="uid://cg6j40q38y28w" path="res://assets/visual/objects/door_entryway.png" id="4_m20nt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xl421"]
+size = Vector2(144, 168)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0lhrk"]
+size = Vector2(128, 112)
+
+[sub_resource type="Animation" id="Animation_53583"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("door_left:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-32, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("door_left:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 64, 128)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("interact_area/door_right:region_rect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 64, 128)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("interact_area/door_right:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(32, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lm8d6"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("door_left:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-32, 0), Vector2(-50, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("door_left:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Rect2(0, 0, 64, 128), Rect2(45, 0, 19, 128)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("interact_area/door_right:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(32, 0), Vector2(48, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("interact_area/door_right:region_rect")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Rect2(0, 0, 64, 128), Rect2(45, 0, 19, 128)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yt52n"]
+_data = {
+"RESET": SubResource("Animation_53583"),
+"open": SubResource("Animation_lm8d6")
+}
 
 [node name="MerchantBox" instance=ExtResource("1_msadv")]
 script = ExtResource("2_6tcjf")
@@ -10,5 +125,44 @@ script = ExtResource("2_6tcjf")
 [node name="interact_area" parent="." index="0"]
 disable_mode = 1
 
-[node name="sprite" parent="." index="1"]
-texture = ExtResource("2_avncp")
+[node name="shape" parent="interact_area" index="0"]
+position = Vector2(0, 20)
+shape = SubResource("RectangleShape2D_xl421")
+
+[node name="door_right" type="Sprite2D" parent="interact_area" index="1"]
+position = Vector2(32, 0)
+texture = ExtResource("3_rrff2")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 128)
+
+[node name="door_left" type="Sprite2D" parent="." index="1"]
+position = Vector2(-32, 0)
+texture = ExtResource("3_rrff2")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 128)
+
+[node name="sprite" parent="." index="2"]
+texture = ExtResource("4_m20nt")
+
+[node name="collision" parent="." index="3"]
+visible = false
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_0lhrk")
+
+[node name="icon" parent="." index="4"]
+visible = true
+
+[node name="Label" type="Label" parent="icon" index="2"]
+offset_left = -40.0
+offset_top = -56.0
+offset_right = 40.0
+offset_bottom = -30.0
+text = "Deposit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="anims" type="AnimationPlayer" parent="." index="5"]
+libraries = {
+"": SubResource("AnimationLibrary_yt52n")
+}

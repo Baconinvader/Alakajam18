@@ -4,10 +4,11 @@ class_name Player
 
 var money:int = 0
 var is_being_chased:bool = false
-
+var is_being_searched:bool = false
 
 @onready var base_speed:float = speed
 var prone:bool = false:set=_set_prone
+
 
 
 func _set_prone(val:bool):
@@ -18,9 +19,13 @@ func _set_prone(val:bool):
 		if prone:
 			speed = base_speed*0.5
 			set_collision_mask_value(2, false)
+			$sprite/anim_sprite.play("prone")
 		else:
 			speed = base_speed
 			set_collision_mask_value(2, true)
+			$sprite/anim_sprite.play("walk")
+
+
 
 func is_concealed() -> bool:
 	for concealer in get_tree().get_nodes_in_group("concealers"):
@@ -60,6 +65,10 @@ func _process(delta):
 		
 	if move_vec != Vector2.ZERO:
 		target_direction = move_vec.angle()
+		$sprite/anim_sprite.play()
+		
+	else:
+		$sprite/anim_sprite.pause()
 		
 	if prone:
 		$concealer_sprite.visible = false
@@ -78,8 +87,14 @@ func _process(delta):
 func _physics_process(_delta):
 	is_being_chased = false
 	for enemy in get_tree().get_nodes_in_group("enemies"):
-		if enemy.state == Enemy.CreatureState.FIRING or Enemy.CreatureState.HOSTILE:
+		if enemy.state == Enemy.CreatureState.FIRING or enemy.state == Enemy.CreatureState.HOSTILE:
 			is_being_chased = true
+			break
+			
+	is_being_searched = false
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if enemy.state == Enemy.CreatureState.SUSPICIOUS:
+			is_being_searched = true
 			break
 		
 func _unhandled_input(event):

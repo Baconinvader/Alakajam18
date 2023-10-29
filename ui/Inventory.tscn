@@ -14,8 +14,9 @@ script = ExtResource("1_6dnyd")
 
 [node name="cells" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_top = 64.0
+offset_right = 832.0
+offset_bottom = 192.0
 
 [node name="value_label" type="Label" parent="."]
 layout_mode = 0
@@ -27,17 +28,30 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="background" type="Panel" parent="keys"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 24.0
+offset_right = 136.0
+offset_bottom = 48.0
+
 [node name="label" type="Label" parent="keys"]
 layout_mode = 0
-offset_left = 64.0
-offset_top = 80.0
-offset_right = 121.0
-offset_bottom = 106.0
+offset_left = 72.0
+offset_top = 24.0
+offset_right = 129.0
+offset_bottom = 50.0
 text = "x[KEYS]"
+
+[node name="header" type="Label" parent="keys"]
+layout_mode = 0
+offset_left = 64.0
+offset_right = 139.0
+offset_bottom = 26.0
+text = "Keycards:"
 
 [node name="TextureRect" type="TextureRect" parent="keys"]
 layout_mode = 0
-offset_top = 64.0
 offset_right = 64.0
-offset_bottom = 128.0
+offset_bottom = 64.0
 texture = ExtResource("2_0h856")

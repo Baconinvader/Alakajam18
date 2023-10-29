@@ -34,6 +34,12 @@ func spawn():
 func _process(delta):
 	pass
 
+func _physics_process(_delta):
+	if item:
+		$band_icon.visible = true
+		$band_icon.scale = Vector2.ONE * (2.0+sin($band_stretch.time_left*PI)*0.25)
+	else:
+		$band_icon.visible = false
 
 func _on_pickup_range_body_entered(body):
 	if body == g.player:

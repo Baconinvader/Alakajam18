@@ -21,6 +21,7 @@ var suspicion_rate = 1.0
 
 var stuck_tween:Tween = null
 
+
 @export var starting_patrol_point:PatrolPoint
 @export var reverse_patrol:bool = false
 
@@ -34,6 +35,9 @@ var stuck_tween:Tween = null
 @export var alert_time:float = 0.4
 @export var damage:int = 1
 
+@export var base_speed = 96
+@export var chase_speed = 128
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super._ready()
@@ -45,6 +49,50 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	super._process(delta)
+
+func _draw():
+	var v1 = direction - (fov/2)
+	var v2 = direction + (fov/2)
+	var e1 = Vector2.from_angle((v1))
+	var e2 = Vector2.from_angle((v2))
+	
+	var e3 = Vector2.from_angle((target_direction))
+	
+	var line_length:float = view_range*0.25
+	
+	var line_colour:Color
+	if state == CreatureState.HOSTILE or state == CreatureState.FIRING:
+		line_colour = Color.RED
+	elif state == CreatureState.SUSPICIOUS:
+		line_colour = Color.YELLOW
+	elif state == CreatureState.TRANSITION:
+		line_colour = Color.TRANSPARENT
+	else:
+		line_colour = Color.GREEN
+	line_colour.a = 0.25
+	
+	draw_line(Vector2.ZERO, e1 * line_length, line_colour, 2 )
+	draw_line(Vector2.ZERO, e2 * line_length, line_colour, 2 )
+	
+	draw_arc(Vector2.ZERO, line_length, v1, v2, 8, line_colour, 2)
+	draw_arc(Vector2.ZERO, line_length*0.5, v1, v2, 8, line_colour, 2)
+	draw_arc(Vector2.ZERO, line_length*0.25, v1, v2, 8, line_colour, 2)
+	
+	if next_state == CreatureState.FIRING:
+		var res = get_ray_results(target.position, target)
+		if res:
+			print(res)
+			
+			var r = $sprite/muzzle_flash.position.length()
+			var phi = $sprite/muzzle_flash.position.angle()
+			phi += $sprite.rotation
+			var pos = Vector2.from_angle(phi) * (r-16)
+			
+			draw_line(pos, res.position-position, Color.ORANGE, 2 )
+	
+	#for point in target_path:
+	#	var rel_point = point-position
+	#	draw_circle(rel_point, 16, Color.DARK_RED)
 
 func start_patrol():
 	if starting_patrol_point:
@@ -87,6 +135,16 @@ func finish_alert(new_target:Entity, target_state:CreatureState):
 		
 	if state == CreatureState.FIRING:
 		state = CreatureState.HOSTILE
+		
+		$sprite/muzzle_flash.visible = true
+		$sprite/muzzle_flash.play("fire")
+		#$sprite/muzzle_flash.rotation = direction
+		
+		#var r = starting_muzzle_flash_pos.length()
+		#var phi = starting_muzzle_flash_pos.angle()
+		#phi += rotation
+		#$muzzle_flash.position = Vector2.from_angle(phi) * r
+		
 		
 		$fire_cooldown.start()
 		if get_ray_entity(target):
@@ -133,12 +191,15 @@ func update_state(delta):
 	if state != CreatureState.TRANSITION:
 		if attention_entity:
 			if state == CreatureState.UNALERTED:
+				speed = base_speed
 				suspicion += suspicion_rate*delta
 				
 			elif state == CreatureState.SUSPICIOUS:
+				speed = chase_speed
 				suspicion += suspicion_rate*delta
 				
 			elif state == CreatureState.HOSTILE:
+				speed = chase_speed
 				suspicion = suspicion_time + hostile_time
 				
 			#resolve
@@ -195,16 +256,19 @@ func update_state(delta):
 				
 			#resolve
 			if state == CreatureState.HOSTILE:
+				speed = chase_speed
 				if suspicion < suspicion_time:
 					if target_path.is_empty():
 						state_change(null, CreatureState.SUSPICIOUS)
 					
 			if state == CreatureState.SUSPICIOUS:
+				speed = chase_speed
 				if suspicion <= 0.0:
 					if target_path.is_empty():
 						state_change(null, CreatureState.UNALERTED)
 					
 			if state == CreatureState.UNALERTED:
+				speed = base_speed
 				if target_path.is_empty():
 					start_patrol()
 	else:
@@ -213,6 +277,9 @@ func update_state(delta):
 			target_direction = angle
 	
 func _physics_process(delta):
+	if not g.in_game:
+		return
+		
 	update_state(delta)
 			
 	if suspicion < 0.0:
@@ -256,3 +323,6 @@ func _on_stuck_timer_timeout():
 	var state_change_call = state_change.bindv([null, CreatureState.UNALERTED])
 	stuck_tween.tween_callback(state_change_call)
 	
+
+func _on_muzzle_flash_animation_looped():
+	$sprite/muzzle_flash.visible = false

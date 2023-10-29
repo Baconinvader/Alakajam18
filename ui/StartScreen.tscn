@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://b50k3tecnqna6"]
+[gd_scene load_steps=4 format=3 uid="uid://b50k3tecnqna6"]
 
 [ext_resource type="Script" path="res://ui/StartScreen.gd" id="1_e4ghn"]
+[ext_resource type="Theme" uid="uid://bgfucxe2x8b3y" path="res://assets/theme/main_theme.tres" id="1_o8oho"]
+[ext_resource type="Texture2D" uid="uid://daxykym61y8py" path="res://assets/visual/background2.png" id="3_62osi"]
 
 [node name="StartScreen" type="Control"]
 layout_mode = 3
@@ -9,19 +11,21 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_o8oho")
 script = ExtResource("1_e4ghn")
 
-[node name="background" type="Panel" parent="."]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+[node name="background" type="TextureRect" parent="."]
+offset_right = 1600.0
+offset_bottom = 900.0
+texture = ExtResource("3_62osi")
 
 [node name="start_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 528.0
-offset_top = 480.0
-offset_right = 624.0
-offset_bottom = 511.0
+offset_left = 640.0
+offset_top = 544.0
+offset_right = 904.0
+offset_bottom = 640.0
+theme_override_font_sizes/font_size = 64
 text = "Start"
 
 [connection signal="pressed" from="start_button" to="." method="_on_start_button_pressed"]

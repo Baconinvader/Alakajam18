@@ -13,11 +13,17 @@ config_version=5
 config/name="Alakajam 18"
 run/main_scene="res://Main.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="res://icon.svg"
 
 [autoload]
 
 g="*res://Globals.gd"
+
+[display]
+
+window/size/viewport_width=1600
+window/size/viewport_height=900
 
 [dotnet]
 
@@ -58,5 +64,7 @@ prone={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

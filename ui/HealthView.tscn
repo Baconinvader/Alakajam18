@@ -14,5 +14,5 @@ script = ExtResource("1_w0wi5")
 
 [node name="list" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 64.0
+offset_bottom = 32.0

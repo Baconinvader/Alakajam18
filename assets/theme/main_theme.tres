@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bgfucxe2x8b3y"]
+
+[ext_resource type="FontFile" uid="uid://cyp401c1g35xs" path="res://assets/theme/ROBOTECH GP.ttf" id="1_mivjx"]
+
+[resource]
+default_font = ExtResource("1_mivjx")
+default_font_size = 24

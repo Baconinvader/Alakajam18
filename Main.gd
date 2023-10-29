@@ -18,7 +18,7 @@ func start_game():
 		
 	g.level = preload("res://level/Level.tscn").instantiate()
 	add_child(g.level)
-	g.time_left = 30
+	g.time_left = g.max_time
 	g.in_game = true
 	
 	g.inventory.reset()

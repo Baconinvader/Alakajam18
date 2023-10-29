@@ -105,8 +105,8 @@ func setup_patrols():
 		enemy.start_patrol()
 	
 func setup_entities():
-	for entities in get_tree().get_nodes_in_group("entities"):
-		entities.setup()
+	for entity in get_tree().get_nodes_in_group("entities"):
+		entity.setup()
 	
 func get_tile_at(pos:Vector2) -> TileDat:
 	var tile:TileDat

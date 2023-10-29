@@ -5,6 +5,8 @@ func _get_can_interact() -> bool:
 		return false
 	return true
 
+
+
 func interact():
 	super.interact()
 		
@@ -18,4 +20,15 @@ func interact():
 		value_sum += item.value
 		
 	g.player.money += value_sum
+	Indicator.spawn_indicator("+$"+str(value_sum), self, Color.YELLOW)
 			
+
+func _on_interact_area_body_entered(body):
+	if body == g.player:
+		player_can_interact = true
+		$anims.play("open")
+		
+func _on_interact_area_body_exited(body):
+	if body == g.player:
+		player_can_interact = false
+		$anims.play_backwards("open")

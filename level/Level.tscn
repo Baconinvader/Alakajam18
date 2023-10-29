@@ -23,21 +23,9 @@ layer_0/tile_data = PackedInt32Array(65537, 65538, 0, 65541, 65538, 0, 65545, 65
 position = Vector2(352, -96)
 collision_mask = 1
 starting_patrol_point = NodePath("../patrol1/1")
-reverse_patrol = false
-suspicion_time = 0.5
-hostile_time = 1.0
-attack_type = "ranged"
-fire_cooldown = 2.0
-fire_time = 1.5
-alert_time = 0.4
-damage = 1
-direction = 0.0
-view_range = 512.0
-max_health = 5
 
 [node name="CameraEnemy" parent="." instance=ExtResource("4_0yuss")]
-position = Vector2(160, 288)
-alert_range = 1024
+position = Vector2(128, 288)
 
 [node name="MerchantBox" parent="." instance=ExtResource("4_hoyut")]
 position = Vector2(160, 32)
@@ -50,7 +38,7 @@ position = Vector2(384, 320)
 position = Vector2(-136, -296)
 
 [node name="LockedDoor" parent="." instance=ExtResource("8_edg5v")]
-position = Vector2(640, -264)
+position = Vector2(640, -256)
 
 [node name="patrol1" type="Node2D" parent="."]
 

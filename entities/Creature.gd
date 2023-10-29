@@ -125,23 +125,7 @@ func set_target(entity:Entity):
 		target_path.clear()
 		return null
 		
-func _draw():
-	var v1 = direction - (fov/2)
-	var v2 = direction + (fov/2)
-	var e1 = Vector2.from_angle((v1))
-	var e2 = Vector2.from_angle((v2))
-	
-	var e3 = Vector2.from_angle((target_direction))
-	
-	var line_length:float = view_range
-	
-	draw_line(Vector2.ZERO, e1 * line_length, Color.GREEN, 2 )
-	draw_line(Vector2.ZERO, e2 * line_length, Color.RED, 2 )
-	draw_line(Vector2.ZERO, e3 * 128, Color.YELLOW, 2 )
-	
-	for point in target_path:
-		var rel_point = point-position
-		draw_circle(rel_point, 16, Color.DARK_RED)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -219,6 +203,25 @@ func move(move_vec:Vector2, delta:float):
 func change_health(amount:int):
 	health += amount
 	health = clampi(health, 0, max_health)
+	
+	
+	var text_colour:Color
+	if amount <= 0:
+		text_colour = Color.RED
+		modulate = Color.WHITE
+		var damage_colour:Color = Color.FIREBRICK
+		var damage_tween:Tween = create_tween()
+		damage_tween.tween_property(self, "modulate", damage_colour, 0.5)
+		damage_tween.tween_property(self, "modulate", Color.WHITE, 0.5)
+		
+		var overlay_colour:Color = Color.RED
+		overlay_colour.a = 0.25
+		g.overlay.start(Color.TRANSPARENT, overlay_colour, 0.5)
+	else:
+		text_colour = Color.GREEN
+		
+	Indicator.spawn_indicator(str(amount), self, text_colour)
+	
 	if not health:
 		die()
 		

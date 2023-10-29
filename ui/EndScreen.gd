@@ -4,11 +4,24 @@ extends Control
 func _ready():
 	g.in_game = false
 	
-	$money.text = "Money: %s" % g.player.money
+	var reveal_tween:Tween = create_tween()
+	
+	reveal_tween.tween_property($items_label, "visible", true, 0.0)
+	
 	for item in g.inventory.sold_items:
 		var cell:InventoryCell = preload("res://ui/InventoryCell.tscn").instantiate()
 		cell.item = item
-		$sold_items.add_child(cell)
+		
+		reveal_tween.tween_interval(1.0 / g.inventory.sold_items.size())
+		var add_child_bind = $sold_items.add_child.bindv([cell])
+		reveal_tween.tween_callback(add_child_bind)
+		
+	reveal_tween.tween_interval(1.0)
+	$money_label.text = "aah"
+	
+	reveal_tween.tween_property($money_label, "visible", true, 0.5)
+	reveal_tween.tween_property($money_label, "text", "Final Earnings: %s" % g.player.money, 2.0)
+
 
 func _on_start_button_pressed():
 	g.overlay.start(Color.TRANSPARENT, Color.BLACK, 1.0)

@@ -8,6 +8,7 @@ func interact():
 	locked = false
 	$collision.disabled = true
 	$anims.play("open")
+	obscure_nav(false)
 
 func _physics_process(_delta):
 	if locked and player_can_interact and not can_interact:
