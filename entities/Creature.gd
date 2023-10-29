@@ -25,7 +25,8 @@ func _set_last_target_pos(val):
 		else:
 			target_direction = 0
 	else:
-		target_direction = 0
+		pass
+		#target_direction = 0
 			
 			
 	last_target_pos = val
@@ -34,15 +35,23 @@ func _set_direction(val:float):
 	direction = val
 	queue_redraw()
 
-func get_ray_results(pos:Vector2):
+func get_ray_results(pos:Vector2, entity:Entity):
 	var space_state = get_world_2d().direct_space_state
 	var query = PhysicsRayQueryParameters2D.create(position, pos)
+	if entity is Player:
+		var collision_mask:int = entity.collision_mask
+		if entity.prone:
+			collision_mask -= 2
+		else:
+			collision_mask += 2
+		query.collision_mask = collision_mask
+
 	var result = space_state.intersect_ray(query)
 
 	return result
 
 func get_ray_entity(entity:Entity) -> bool:
-	var results = get_ray_results(entity.position)
+	var results = get_ray_results(entity.position, entity)
 	if results and results.collider == entity:
 		return true
 	else:
@@ -80,10 +89,10 @@ func set_target_pos(pos:Vector2):
 	#g.level.nav.get_closest_point(position)
 	var is_nav_disabled:bool = g.level.nav.is_point_disabled(current_tile.nav_id)
 	if is_nav_disabled:
-		current_tile.set_nav_enabled(true)
+		current_tile.set_nav_disabled(true)
 	var path_raw:PackedInt64Array = g.level.nav.get_id_path(current_tile.nav_id, g.level.nav.get_closest_point(pos))
 	if is_nav_disabled:
-		current_tile.set_nav_enabled(false)
+		current_tile.set_nav_disabled(false)
 	
 	#print(position," -> ",pos," ",path_raw)
 	
@@ -141,8 +150,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if not g.in_game:
+		return
+		
 	if not g.angles_similar(direction, target_direction):
 		direction = g.rotate_to(direction, target_direction, turn_speed *delta)
+		$sprite.rotation = direction
 	
 	if target_path:
 		
@@ -160,14 +173,12 @@ func _process(delta):
 				#refresh path
 				#set_target_pos(target_path[-1])
 				#target_path.remove_at(0)
-
 		else:
 			var move_vec:Vector2
 			
 			#if last_target_pos and target_path[0] != last_target_pos:
 			#	diff = target_path[0] - last_target_pos
 				
-
 			#no diag
 			if abs(diff.x):
 				diff.y = 0
@@ -176,13 +187,9 @@ func _process(delta):
 				
 			target_direction = diff.normalized().angle()
 			
-			if not g.angles_similar(direction, target_direction):
-				
-				
-				print("no:",direction, " ",target_direction)
+			if false and not g.angles_similar(direction, target_direction):
+				pass
 			else:
-				print("yes:",direction, " ",target_direction)
-				
 				dist = diff.length()
 				
 				if dist >= close_dist*speed*delta:

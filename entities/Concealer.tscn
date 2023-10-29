@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://ci7pe1q1n531f"]
+
+[ext_resource type="PackedScene" uid="uid://jf2x5l287h4w" path="res://entities/Entity.tscn" id="1_c7yls"]
+[ext_resource type="Texture2D" uid="uid://bdy167b3hsw3d" path="res://assets/visual/objects/table_large.png" id="2_hoxac"]
+[ext_resource type="Script" path="res://entities/Concealer.gd" id="2_iccap"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vy18p"]
+size = Vector2(256, 128)
+
+[node name="Concealer" groups=["concealers"] instance=ExtResource("1_c7yls")]
+collision_layer = 2
+script = ExtResource("2_iccap")
+
+[node name="sprite" parent="." index="0"]
+texture = ExtResource("2_hoxac")
+
+[node name="collision" parent="." index="1"]
+shape = SubResource("RectangleShape2D_vy18p")
+
+[node name="concealer_area" type="Area2D" parent="." index="2"]
+
+[connection signal="body_entered" from="concealer_area" to="." method="_on_concealer_area_body_entered"]
+[connection signal="body_exited" from="concealer_area" to="." method="_on_concealer_area_body_exited"]

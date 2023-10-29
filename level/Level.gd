@@ -75,7 +75,7 @@ func generate_nav():
 				nav_map[point_id] = tile
 				
 				var dat:TileData = $tiles.get_cell_tile_data (0, Vector2i(x+offset_x,y+offset_y) )
-				if dat.get_collision_polygons_count(0):
+				if not dat or dat.get_collision_polygons_count(0):
 					continue
 				
 				tile.nav_id = point_id

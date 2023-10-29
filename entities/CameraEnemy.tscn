@@ -5,18 +5,14 @@
 [ext_resource type="Texture2D" uid="uid://yfxa3fi6400g" path="res://assets/visual/camera.png" id="2_hx7mn"]
 
 [node name="CameraEnemy" instance=ExtResource("1_t81v5")]
+collision_mask = 1
 script = ExtResource("2_3x1h4")
-reverse_patrol = null
-suspicion_time = null
-hostile_time = null
-attack_type = null
-fire_cooldown = null
-fire_time = null
-alert_time = null
-damage = null
-direction = null
-view_range = null
-max_health = null
+alert_range = 1024
 
 [node name="sprite" parent="." index="0"]
 texture = ExtResource("2_hx7mn")
+centered = false
+offset = Vector2(0, -32)
+
+[node name="alert_icon" parent="." index="4"]
+position = Vector2(0, -56)

@@ -1,0 +1,161 @@
+[gd_scene load_steps=10 format=3 uid="uid://bcskf4tmq2mye"]
+
+[ext_resource type="PackedScene" uid="uid://dsmwvkxrrx8cx" path="res://items/Interactable.tscn" id="1_2egnb"]
+[ext_resource type="Script" path="res://level/LockedDoor.gd" id="2_67we4"]
+[ext_resource type="Texture2D" uid="uid://0o5tb67aex3t" path="res://assets/visual/objects/door_single.png" id="4_6y5lx"]
+[ext_resource type="Texture2D" uid="uid://cg6j40q38y28w" path="res://assets/visual/objects/door_entryway.png" id="4_lgb5k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lbdeh"]
+size = Vector2(112, 168)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_emhi2"]
+size = Vector2(96, 74)
+
+[sub_resource type="Animation" id="Animation_lm8d6"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("door_left:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-32, 0), Vector2(-50, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("door_left:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Rect2(0, 0, 64, 128), Rect2(45, 0, 19, 128)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("door_right:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(32, 0), Vector2(48, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("door_right:region_rect")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Rect2(0, 0, 64, 128), Rect2(45, 0, 19, 128)]
+}
+
+[sub_resource type="Animation" id="Animation_53583"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("door_left:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-80, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("door_left:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 64, 128)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("door_right:region_rect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 64, 128)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("door_right:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(32, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yt52n"]
+_data = {
+"RESET": SubResource("Animation_53583"),
+"open": SubResource("Animation_lm8d6")
+}
+
+[node name="LockedDoor" instance=ExtResource("1_2egnb")]
+script = ExtResource("2_67we4")
+
+[node name="label" type="Label" parent="." index="0"]
+offset_left = -56.0
+offset_top = -96.0
+offset_right = 56.0
+offset_bottom = -70.0
+text = "Requires Key"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="shape" parent="interact_area" index="0"]
+position = Vector2(0, 20)
+shape = SubResource("RectangleShape2D_lbdeh")
+
+[node name="door_left" type="Sprite2D" parent="." index="2"]
+position = Vector2(-80, 0)
+texture = ExtResource("4_6y5lx")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 128)
+
+[node name="door_right" type="Sprite2D" parent="." index="3"]
+position = Vector2(32, 0)
+texture = ExtResource("4_6y5lx")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 128)
+
+[node name="sprite" parent="." index="4"]
+texture = ExtResource("4_lgb5k")
+
+[node name="collision" parent="." index="5"]
+position = Vector2(0, 27)
+shape = SubResource("RectangleShape2D_emhi2")
+
+[node name="anims" type="AnimationPlayer" parent="." index="7"]
+libraries = {
+"": SubResource("AnimationLibrary_yt52n")
+}

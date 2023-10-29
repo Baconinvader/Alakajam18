@@ -1,5 +1,7 @@
 extends Enemy
 
+@export var alert_range:int = 1024
+
 func finish_alert(new_target:Entity, target_state:CreatureState):
 	state = target_state
 	next_state = CreatureState.NONE
@@ -8,10 +10,22 @@ func finish_alert(new_target:Entity, target_state:CreatureState):
 		
 	if state == CreatureState.HOSTILE:
 		target = new_target
+		do_alert()
 		
 	if state == CreatureState.UNALERTED:
 		target = null
 		
+func do_alert():
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		var dist = (enemy.position - position).length()
+		if dist <= alert_range:
+			if enemy.state == Enemy.CreatureState.NONE or enemy.state == Enemy.CreatureState.UNALERTED:
+				enemy.suspicion = enemy.suspicion_time - 0.01
+				enemy.state_change(g.player, Enemy.CreatureState.SUSPICIOUS)
+				enemy.set_target(g.player)
+		
+func on_reached_target():
+	pass
 
 func update_state(delta):
 	var attention_entity:Entity

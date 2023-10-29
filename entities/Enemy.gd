@@ -25,7 +25,7 @@ var stuck_tween:Tween = null
 @export var reverse_patrol:bool = false
 
 @export var suspicion_time:float = 0.5
-@export var hostile_time:float = 0.5
+@export var hostile_time:float = 1.0
 
 @export var attack_type:String = "ranged"
 @export var min_range:int = 128
@@ -49,6 +49,7 @@ func _process(delta):
 func start_patrol():
 	if starting_patrol_point:
 		set_target(starting_patrol_point)
+		pass
 
 func state_change(new_target:Entity, target_state:CreatureState):
 	next_state = target_state
@@ -157,9 +158,14 @@ func update_state(delta):
 			elif state == CreatureState.HOSTILE:
 				if target and min_range:
 					var dist = (target.position - position).length()
-					if dist <= min_range and not $fire_cooldown.time_left:
+					if dist <= min_range:
 						target_path.clear()
-						state_change(attention_entity, CreatureState.FIRING)
+						var angle = (target.position-position).angle()
+						target_direction = angle
+						
+						if not $fire_cooldown.time_left:
+							state_change(attention_entity, CreatureState.FIRING)
+
 					else:
 						set_target(attention_entity)
 						if target_path.size() > 1:
@@ -190,11 +196,17 @@ func update_state(delta):
 			#resolve
 			if state == CreatureState.HOSTILE:
 				if suspicion < suspicion_time:
-					state_change(null, CreatureState.SUSPICIOUS)
+					if target_path.is_empty():
+						state_change(null, CreatureState.SUSPICIOUS)
 					
 			if state == CreatureState.SUSPICIOUS:
 				if suspicion <= 0.0:
-					state_change(null, CreatureState.UNALERTED)
+					if target_path.is_empty():
+						state_change(null, CreatureState.UNALERTED)
+					
+			if state == CreatureState.UNALERTED:
+				if target_path.is_empty():
+					start_patrol()
 	else:
 		if next_state == CreatureState.FIRING:
 			var angle = (target.position-position).angle()

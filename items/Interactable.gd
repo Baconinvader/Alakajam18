@@ -20,7 +20,6 @@ func _get_can_interact() -> bool:
 #	update_interact_icon()
 
 func update_interact_icon():
-	print(can_interact," ",player_can_interact)
 	if can_interact and player_can_interact:
 		$icon.visible = true
 	else:
@@ -43,7 +42,6 @@ func interact():
 	pass
 
 func _on_interact_area_body_entered(body):
-	print(body)
 	if body == g.player:
 		player_can_interact = true
 		
@@ -53,5 +51,3 @@ func _on_interact_area_body_exited(body):
 		player_can_interact = false
 
 
-func _on_interact_area_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	print("ah",body)

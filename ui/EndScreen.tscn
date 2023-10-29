@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://buuuywt64xcs0"]
+
+[ext_resource type="Script" path="res://ui/EndScreen.gd" id="1_42blo"]
+
+[node name="EndScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_42blo")
+
+[node name="background" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="start_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 480.0
+offset_right = 637.0
+offset_bottom = 511.0
+text = "Back To Menu"
+
+[node name="money" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "[NOMONEY]"
+
+[node name="sold_items" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 104.0
+offset_bottom = 104.0
+
+[connection signal="pressed" from="start_button" to="." method="_on_start_button_pressed"]

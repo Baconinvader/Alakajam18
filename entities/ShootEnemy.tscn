@@ -9,6 +9,6 @@ script/source = "extends \"res://entities/Enemy.gd\"
 "
 
 [node name="ShootEnemy" instance=ExtResource("1_f3671")]
+collision_mask = 1
 script = SubResource("GDScript_s66q6")
 shoot_time = 1.0
-max_health = null

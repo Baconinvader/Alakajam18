@@ -3,7 +3,15 @@ extends Control
 class_name Inventory
 
 @export var inventory_size:int = 10
+var keys:int = 0
 var items:Array = []
+
+var sold_items:Array[Item] = []
+
+func reset():
+	keys = 0
+	items.clear()
+	sold_items.clear()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,11 +31,12 @@ func pop_item() -> Item:
 		return null
 	
 	var popped_item:Item = items.pop_front()
+	sold_items.append(popped_item)
 	update_cells()
 	return popped_item
 
 func _physics_process(delta):
-	pass
+	$keys/label.text = "x%s" % keys
 	
 func update_cells():
 	var i = 0

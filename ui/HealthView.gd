@@ -9,6 +9,7 @@ func _on_player_set():
 	for i in g.player.max_health:
 		var health_point = TextureRect.new()
 		health_point.texture = preload("res://assets/visual/icons/health_point.png")
+		health_point.size = health_point.texture.get_size()
 		
 		$list.add_child(health_point)
 

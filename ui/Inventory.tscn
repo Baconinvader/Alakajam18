@@ -1,12 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://3i7dwqank25n"]
+[gd_scene load_steps=3 format=3 uid="uid://3i7dwqank25n"]
 
 [ext_resource type="Script" path="res://ui/Inventory.gd" id="1_6dnyd"]
+[ext_resource type="Texture2D" uid="uid://dgyjche15r0f5" path="res://assets/visual/icons/key.png" id="2_0h856"]
 
 [node name="Inventory" type="Control"]
 layout_mode = 3
-anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.198
+offset_bottom = -0.304016
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6dnyd")
@@ -20,3 +21,23 @@ offset_bottom = 40.0
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="keys" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="label" type="Label" parent="keys"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 80.0
+offset_right = 121.0
+offset_bottom = 106.0
+text = "x[KEYS]"
+
+[node name="TextureRect" type="TextureRect" parent="keys"]
+layout_mode = 0
+offset_top = 64.0
+offset_right = 64.0
+offset_bottom = 128.0
+texture = ExtResource("2_0h856")

@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://entities/Creature.gd" id="2_sd18e"]
 
 [node name="Creature" instance=ExtResource("1_81ni3")]
+collision_mask = 3
 script = ExtResource("2_sd18e")
 speed = 128.0
 direction = 0.0

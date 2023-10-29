@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://drc45ad5oci3n"]
+[gd_scene load_steps=7 format=3 uid="uid://drc45ad5oci3n"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_ha00i"]
 [ext_resource type="PackedScene" uid="uid://3i7dwqank25n" path="res://ui/Inventory.tscn" id="2_efjyc"]
 [ext_resource type="PackedScene" uid="uid://f5hv5g18v8ef" path="res://ui/MoneyView.tscn" id="3_wqiu2"]
 [ext_resource type="PackedScene" uid="uid://1j0dwesoxw3" path="res://ui/HealthView.tscn" id="4_h24wv"]
 [ext_resource type="PackedScene" uid="uid://dl0lcx3ckcuf0" path="res://ui/TimerView.tscn" id="5_jjtry"]
+[ext_resource type="PackedScene" uid="uid://hae4eqrs1chy" path="res://ui/Overlay.tscn" id="6_qqtvb"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_ha00i")
@@ -12,7 +13,6 @@ script = ExtResource("1_ha00i")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Inventory" parent="UI" instance=ExtResource("2_efjyc")]
-anchors_preset = -1
 anchor_right = 0.167
 anchor_bottom = 0.099
 offset_top = 576.0
@@ -33,3 +33,5 @@ offset_right = 831.744
 [node name="TimerView" parent="UI" instance=ExtResource("5_jjtry")]
 offset_top = 64.0
 offset_bottom = 63.696
+
+[node name="overlay" parent="." instance=ExtResource("6_qqtvb")]

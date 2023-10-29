@@ -42,8 +42,6 @@ func rotate_to(from:float, to:float, amount:float):
 	else: #|<-a b<-|
 		diff_backward = from + ((2*PI) - to)
 		
-	print(from," -> ",to,": ",diff_backward," < > ",diff_forward," a ",amount)
-	
 
 	if increased_from:
 		while from > 0:
@@ -81,9 +79,13 @@ func _set_player(val:Player):
 	player = val
 	emit_signal("player_set")
 
+var main
+var overlay:Overlay
 var level:Level
 var player:Player: set=_set_player
 var inventory:Inventory
 
 var time_left:float = 0
 var time_decrease_speed = 1.0
+
+var in_game:bool = false

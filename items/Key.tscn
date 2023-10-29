@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://cm6s7mkk1vb7y"]
+
+[ext_resource type="PackedScene" uid="uid://dooqp1rjphbyb" path="res://items/Item.tscn" id="1_ydcfc"]
+[ext_resource type="Script" path="res://items/Key.gd" id="2_ke0rj"]
+[ext_resource type="Texture2D" uid="uid://cc07s1qjy4wiu" path="res://assets/visual/item/key.png" id="3_ub13l"]
+
+[node name="Key" instance=ExtResource("1_ydcfc")]
+script = ExtResource("2_ke0rj")
+item_name = "Key"
+texture = ExtResource("3_ub13l")
+value = 0

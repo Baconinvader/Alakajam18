@@ -10,8 +10,13 @@ func _set_item(val:Item):
 	if item:
 		$item_sprite.texture = item.texture
 		$item_sprite.visible = true
+		if item is Key:
+			$money_icon.visible = false
+		else:
+			$money_icon.visible = true
 	else:
 		$item_sprite.visible = false
+		$money_icon.visible = false
 		if respawn_time:
 			$respawn_timer.start()
 
@@ -32,7 +37,10 @@ func _process(delta):
 
 func _on_pickup_range_body_entered(body):
 	if body == g.player:
-		if item and g.inventory.try_add_item(item):
+		if item is Key:
+			g.inventory.keys += 1
+			item = null
+		elif item and g.inventory.try_add_item(item):
 			item = null
 
 
