@@ -59,7 +59,7 @@ collision_layer = 4
 motion_mode = 1
 script = ExtResource("2_dsyds")
 reverse_patrol = false
-suspicion_time = 1.0
+suspicion_time = 0.5
 hostile_time = 1.0
 attack_type = "ranged"
 min_range = 196
@@ -70,6 +70,8 @@ damage = 1
 base_speed = 96
 chase_speed = 156
 speed = 100.0
+turn_speed = 1.5
+fov = 2.0
 
 [node name="sprite" parent="." index="0"]
 texture = ExtResource("2_ynike")

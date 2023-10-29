@@ -2,6 +2,9 @@ extends Node
 
 var current_path:String = ""
 
+func _ready():
+	$music.play()
+
 func play_sound(sound_name:String):
 	var path:String = "res://assets/audio/%s.wav" % sound_name
 	if current_path != path:

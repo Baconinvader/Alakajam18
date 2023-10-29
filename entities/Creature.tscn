@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://phqc45vkplax" path="res://assets/audio/footstep2.wav" id="4_kl76a"]
 [ext_resource type="AudioStream" uid="uid://bdahhict4bkyv" path="res://assets/audio/footstep3.wav" id="5_nmw50"]
 [ext_resource type="AudioStream" uid="uid://q8u5bo1keuol" path="res://assets/audio/hit.wav" id="6_eabku"]
-[ext_resource type="Texture2D" uid="uid://bt3vtn35cwo0t" path="res://assets/visual/area_light.png" id="7_5w0pf"]
+[ext_resource type="Texture2D" uid="uid://bt3vtn35cwo0t" path="res://assets/visual/lights/area_light.png" id="7_qc35b"]
 
 [node name="Creature" instance=ExtResource("1_81ni3")]
 collision_mask = 7
@@ -42,7 +42,7 @@ stream = ExtResource("6_eabku")
 
 [node name="light" type="PointLight2D" parent="." index="7"]
 energy = 0.5
-texture = ExtResource("7_5w0pf")
+texture = ExtResource("7_qc35b")
 texture_scale = 2.0
 
 [connection signal="timeout" from="footstep_timer" to="." method="_on_footstep_timer_timeout"]

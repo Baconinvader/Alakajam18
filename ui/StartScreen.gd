@@ -26,15 +26,16 @@ func _on_overlay_finished():
 
 func _on_tutorial_button_pressed():
 	$tutorial.visible = true
-
+	Sound.play_sound("button1")
 
 func _on_right_pressed():
 	tutorial_slide_index = (tutorial_slide_index + 1)%tutorial_slides.size()
-
+	Sound.play_sound("button1")
 
 func _on_left_pressed():
 	tutorial_slide_index = (tutorial_slide_index - 1)%tutorial_slides.size()
-
+	Sound.play_sound("button1")
 
 func _on_exit_pressed():
 	$tutorial.visible = false
+	Sound.play_sound("button1")

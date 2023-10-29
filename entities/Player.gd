@@ -102,7 +102,7 @@ func on_collide(res:KinematicCollision2D):
 	var collider = res.get_collider()
 	if collider is Enemy:
 		
-		if collider.next_state != Enemy.CreatureState.HOSTILE:
+		if collider.state != Enemy.CreatureState.HOSTILE and collider.next_state != Enemy.CreatureState.HOSTILE:
 			collider.set_target(self)
 			var angle = (position-collider.position).angle()
 			collider.target_direction  = angle

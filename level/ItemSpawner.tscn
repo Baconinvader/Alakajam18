@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://level/ItemSpawner.gd" id="1_4wa7e"]
 [ext_resource type="Texture2D" uid="uid://ca62762l4efwt" path="res://assets/visual/item/money.png" id="2_ldl00"]
 [ext_resource type="Texture2D" uid="uid://c0l6ioo288hj8" path="res://assets/visual/item/money_band.png" id="3_ljcru"]
-[ext_resource type="Texture2D" uid="uid://bt3vtn35cwo0t" path="res://assets/visual/area_light.png" id="4_3rhsh"]
+[ext_resource type="Texture2D" uid="uid://bt3vtn35cwo0t" path="res://assets/visual/lights/area_light.png" id="4_3rhsh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4sedq"]
 radius = 16.0

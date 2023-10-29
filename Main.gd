@@ -7,8 +7,7 @@ func _ready():
 	g.inventory = $UI/Inventory
 	g.overlay = $overlay
 	
-	
-	
+
 	var start_screen = preload("res://ui/StartScreen.tscn").instantiate()
 	$UI.add_child(start_screen)
 

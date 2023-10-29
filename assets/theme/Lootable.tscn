@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://assets/theme/Lootable.gd" id="2_xie6k"]
 [ext_resource type="Texture2D" uid="uid://c0l6ioo288hj8" path="res://assets/visual/item/money_band.png" id="3_1r3h1"]
 [ext_resource type="AudioStream" uid="uid://ch88447fyavfq" path="res://assets/audio/open.wav" id="3_jk2lw"]
-[ext_resource type="Texture2D" uid="uid://bt3vtn35cwo0t" path="res://assets/visual/area_light.png" id="5_kanou"]
+[ext_resource type="Texture2D" uid="uid://bt3vtn35cwo0t" path="res://assets/visual/lights/area_light.png" id="5_704d2"]
 
 [node name="Lootable" instance=ExtResource("1_rkn73")]
 script = ExtResource("2_xie6k")
@@ -25,4 +25,4 @@ stream = ExtResource("3_jk2lw")
 
 [node name="light" type="PointLight2D" parent="." index="9"]
 color = Color(0, 0.807843, 0, 1)
-texture = ExtResource("5_kanou")
+texture = ExtResource("5_704d2")

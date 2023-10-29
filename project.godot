@@ -10,11 +10,13 @@ config_version=5
 
 [application]
 
-config/name="Alakajam 18"
+config/name="Loot Labyrinth"
+config/description="Made for Alakajam 18, theme: Labyrinth"
 run/main_scene="res://Main.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
-config/icon="res://icon.svg"
+config/icon="res://assets/visual/icon.png"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 

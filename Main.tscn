@@ -39,8 +39,7 @@ offset_right = 831.744
 offset_bottom = -0.304001
 theme = ExtResource("3_5dyge")
 
-[node name="overlay" parent="." instance=ExtResource("6_qqtvb")]
-visible = false
-
 [node name="darkness" type="CanvasModulate" parent="."]
 color = Color(0.298039, 0.298039, 0.298039, 1)
+
+[node name="overlay" parent="." instance=ExtResource("6_qqtvb")]
