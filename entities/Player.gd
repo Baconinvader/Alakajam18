@@ -98,6 +98,15 @@ func _physics_process(_delta):
 			is_being_searched = true
 			break
 		
+func on_collide(res:KinematicCollision2D):
+	var collider = res.get_collider()
+	if collider is Enemy:
+		collider.set_target(self)
+		var angle = (position-collider.position).angle()
+		collider.target_direction  = angle
+		
+		position += Vector2.from_angle(angle)*0.5
+		
 func _unhandled_input(event):
 	#var me:InputEventMouseButton = event as InputEventMouseButton
 	#if me:

@@ -4,11 +4,11 @@ signal player_set
 signal time_out
 
 func angle_in_bounds(angle:float, from:float, to:float) -> bool:
-	if from < 0 :
+	while from < 0 :
 		from += (2*PI)
-	if to < 0:
+	while to < 0:
 		to += (2*PI)
-	if angle < 0:
+	while angle < 0:
 		angle += (2*PI)
 		
 	if from >= to:

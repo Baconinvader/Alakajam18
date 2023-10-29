@@ -216,13 +216,17 @@ func move(move_vec:Vector2, delta:float):
 		
 		move_vec *= speed*delta
 		
+		#move_and_collide(move_vec)
 		var res:KinematicCollision2D = move_and_collide(move_vec, true)
 		if res and res.get_collider():
-			pass
+			on_collide(res)
 		else:
 			position += move_vec
 		
 		update_current_tile()
+		
+func on_collide(res:KinematicCollision2D):
+	pass
 		
 func change_health(amount:int):
 	health += amount

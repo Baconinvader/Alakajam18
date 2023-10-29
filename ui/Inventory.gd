@@ -3,10 +3,15 @@ extends Control
 class_name Inventory
 
 @export var inventory_size:int = 10
-var keys:int = 0
+var keys:int = 0:set=_set_keys
 var items:Array = []
 
 var sold_items:Array[Item] = []
+
+func _set_keys(val:int):
+	if val > keys:
+		Sound.play_sound("pickup")
+	keys = val
 
 func reset():
 	keys = 0

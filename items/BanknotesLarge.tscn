@@ -4,6 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://diiqep26cnrue" path="res://assets/visual/item/backnotes_large.png" id="2_3r83m"]
 
 [node name="BanknotesLarge" instance=ExtResource("1_w72n2")]
-item_name = "Banknotes Large"
+item_name = "Banknotes (Large)"
 texture = ExtResource("2_3r83m")
 value = 500

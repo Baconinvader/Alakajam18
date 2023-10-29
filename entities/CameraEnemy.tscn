@@ -13,6 +13,7 @@ script = ExtResource("2_3x1h4")
 alert_range = 1024
 default_angle = 0.0
 turn_fov = 2.94159
+fire_cooldown = 2.0
 
 [node name="base" type="Sprite2D" parent="." index="0"]
 position = Vector2(32, 0)

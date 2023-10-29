@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bbwhiusxcraa1"]
+[gd_scene load_steps=16 format=3 uid="uid://bbwhiusxcraa1"]
 
 [ext_resource type="PackedScene" uid="uid://bb26y78ash1eg" path="res://entities/Creature.tscn" id="1_vg2aq"]
 [ext_resource type="Script" path="res://entities/Enemy.gd" id="2_dsyds"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://c0gvouu6x5vv7" path="res://assets/audio/shoot.wav" id="6_q3kb3"]
 [ext_resource type="AudioStream" uid="uid://ykdodi51pv7u" path="res://assets/audio/hostile.wav" id="7_1ahid"]
 [ext_resource type="AudioStream" uid="uid://cyvfauvd4gxaj" path="res://assets/audio/suspicious.wav" id="8_ovsdu"]
+[ext_resource type="Texture2D" uid="uid://boc3oi47t1xgd" path="res://assets/visual/lights/enemy_searchlight.png" id="9_msbrl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0w22n"]
 atlas = ExtResource("5_qgdu4")
@@ -54,6 +55,7 @@ animations = [{
 radius = 16.0
 
 [node name="Enemy" groups=["enemies"] instance=ExtResource("1_vg2aq")]
+collision_layer = 4
 motion_mode = 1
 script = ExtResource("2_dsyds")
 reverse_patrol = false
@@ -61,7 +63,7 @@ suspicion_time = 1.0
 hostile_time = 1.0
 attack_type = "ranged"
 min_range = 196
-fire_cooldown = 2.0
+fire_cooldown = 1.0
 fire_time = 1.0
 alert_time = 0.5
 damage = 1
@@ -78,6 +80,11 @@ position = Vector2(56, 4)
 sprite_frames = SubResource("SpriteFrames_6fqei")
 animation = &"fire"
 frame_progress = 0.952176
+
+[node name="searchlight" type="PointLight2D" parent="sprite" index="1"]
+position = Vector2(256, 0)
+energy = 0.25
+texture = ExtResource("9_msbrl")
 
 [node name="collision" parent="." index="1"]
 shape = SubResource("CircleShape2D_qjn22")

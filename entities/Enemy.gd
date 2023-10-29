@@ -79,16 +79,17 @@ func _draw():
 	draw_arc(Vector2.ZERO, line_length*0.25, v1, v2, 8, line_colour, 2)
 	
 	if next_state == CreatureState.FIRING:
-		var res = get_ray_results(target.position, target)
-		if res:
-			print(res)
-			
-			var r = $sprite/muzzle_flash.position.length()
-			var phi = $sprite/muzzle_flash.position.angle()
-			phi += $sprite.rotation
-			var pos = Vector2.from_angle(phi) * (r-16)
-			
-			draw_line(pos, res.position-position, Color.ORANGE, 2 )
+		if target: #hack
+			var res = get_ray_results(target.position, target)
+			if res:
+				print(res)
+				
+				var r = $sprite/muzzle_flash.position.length()
+				var phi = $sprite/muzzle_flash.position.angle()
+				phi += $sprite.rotation
+				var pos = Vector2.from_angle(phi) * (r-16)
+				
+				draw_line(pos, res.position-position, Color.ORANGE, 2 )
 	
 	for point in target_path:
 		var rel_point = point-position
@@ -120,23 +121,34 @@ func state_change(new_target:Entity, target_state:CreatureState):
 	else:
 		tween.tween_interval(alert_time)
 		
-	var callable = finish_alert.bindv([new_target, target_state])
+	var callable = finish_state_change.bindv([new_target, target_state])
 	tween.tween_callback(callable)
 	if target_state != CreatureState.HOSTILE and target_state != CreatureState.FIRING:
 		tween.tween_property($alert_icon, "visible", false, 0.1)
 	
-func finish_alert(new_target:Entity, target_state:CreatureState):
+func finish_state_change(new_target:Entity, target_state:CreatureState):
 	state = target_state
 	next_state = CreatureState.NONE
 	
 	if state == CreatureState.HOSTILE:
+		$sprite/searchlight.color = Color.RED
+		$light.color = Color.RED
+		suspicion_rate = 0.5
+		
 		$hostile_sound.play()
 	
 	if state == CreatureState.SUSPICIOUS:
+		$sprite/searchlight.color = Color.YELLOW
+		$light.color = Color.YELLOW
+		
 		set_target(new_target)
 		$suspicious_sound.play()
 		
 	if state == CreatureState.UNALERTED:
+		$sprite/searchlight.color = Color.WHITE
+		$light.color = Color.WHITE
+		suspicion_rate = 1.0
+		
 		start_patrol()
 		
 	if state == CreatureState.FIRING:
@@ -284,8 +296,19 @@ func update_state(delta):
 					start_patrol()
 	else:
 		if next_state == CreatureState.FIRING:
-			var angle = (target.position-position).angle()
-			target_direction = angle
+			if target: #hack
+				var angle = (target.position-position).angle()
+				target_direction = angle
+	
+func on_collide(res:KinematicCollision2D):
+	super.on_collide(res)
+	if res.get_collider() is Enemy:
+		start_patrol()
+		
+	elif res.get_collider() is Player:
+		set_target(g.player)
+		var angle = (target.position-position).angle()
+		target_direction = angle
 	
 func _physics_process(delta):
 	if not g.in_game:
@@ -331,8 +354,19 @@ func _on_stuck_timer_timeout():
 	#wait a random amount of time first
 	stuck_tween = create_tween()
 	stuck_tween.tween_interval(randf_range(1.0, 3.0))
+	
+	#var new_patrol:PatrolPoint = get_tree().get_nodes_in_group("patrol_points").pick_random()
+	#starting_patrol_point = new_patrol
+	
+	#var phase_call =  set_collision_mask_value.bindv([3, false])
+	#var solid_call =  set_collision_mask_value.bindv([3, true])
+	
+	
 	var state_change_call = state_change.bindv([null, CreatureState.UNALERTED])
 	stuck_tween.tween_callback(state_change_call)
+	#stuck_tween.tween_callback(phase_call)
+	stuck_tween.tween_interval(2.0)
+	#stuck_tween.tween_callback(solid_call)
 	
 
 func _on_muzzle_flash_animation_looped():

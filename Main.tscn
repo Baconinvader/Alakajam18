@@ -41,3 +41,6 @@ theme = ExtResource("3_5dyge")
 
 [node name="overlay" parent="." instance=ExtResource("6_qqtvb")]
 visible = false
+
+[node name="darkness" type="CanvasModulate" parent="."]
+color = Color(0.298039, 0.298039, 0.298039, 1)

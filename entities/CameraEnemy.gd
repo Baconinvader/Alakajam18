@@ -5,30 +5,66 @@ extends Enemy
 @export var default_angle:float = 0
 @export var turn_fov:float = PI-0.2
 
-func finish_alert(new_target:Entity, target_state:CreatureState):
+var alerting:bool = false
+
+func finish_state_change(new_target:Entity, target_state:CreatureState):
 	state = target_state
 	next_state = CreatureState.NONE
 	if state == CreatureState.SUSPICIOUS:
+		$sprite/searchlight.color = Color.YELLOW
+		$light.color = Color.YELLOW
+		
 		target = new_target
 		
 	if state == CreatureState.HOSTILE:
+		$sprite/searchlight.color = Color.RED
+		$light.color = Color.RED
+		suspicion_rate = 0.5
+		
 		target = new_target
-		do_alert()
+		start_alert()
 		
 	if state == CreatureState.UNALERTED:
+		$sprite/searchlight.color = Color.WHITE
+		$light.color = Color.WHITE
+		target_direction = default_angle
+		
 		target = null
 		
-func do_alert():
+func start_alert():
 	$alarm_sound.play()
 	$alarm_light.visible = true
 	var light_tween:Tween = create_tween()
 	light_tween.tween_property($alarm_light, "energy", 2, 2.0)
+	
+	light_tween.tween_interval(2.0)
+	light_tween.tween_callback(check_continue_alert)
+	
+	do_alert()
+	alerting = true
+	
+func check_continue_alert():
+	if state == CreatureState.HOSTILE:
+		do_alert()
+		
+		var light_tween:Tween = create_tween()
+		light_tween.tween_interval(2.0)
+		light_tween.tween_callback(check_continue_alert)
+	else:
+		finish_alert()
+		
+func _physics_process(delta):
+	super._physics_process(delta)
+	if alerting:
+		$alarm_light.rotation += delta*PI
+		
+func finish_alert():
+	alerting = false
+	var light_tween:Tween = create_tween()
 	light_tween.tween_property($alarm_light, "energy", 0, 2.0)
 	light_tween.tween_property($alarm_light, "visible", false, 0.0)
-	
-	var light_tween2:Tween = create_tween()
-	light_tween2.tween_property($alarm_light, "rotation", 2*PI, 4.0)
-	
+		
+func do_alert():
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		
 		var dist = (enemy.position - position).length()
@@ -73,9 +109,10 @@ func update_state(delta):
 				if suspicion >= suspicion_time + hostile_time:
 					state_change(attention_entity, CreatureState.HOSTILE)
 				else:
-					var angle = (target.position-position).angle()
-					if can_turn_to(angle):
-						target_direction = angle
+					if target: #hack
+						var angle = (target.position-position).angle()
+						if can_turn_to(angle):
+							target_direction = angle
 					
 			elif state == CreatureState.HOSTILE:
 				var angle = (target.position-position).angle()
