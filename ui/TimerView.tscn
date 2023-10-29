@@ -14,26 +14,35 @@ script = ExtResource("1_ikvva")
 
 [node name="background" type="Panel" parent="."]
 layout_mode = 0
-offset_right = 192.0
+offset_right = 256.0
 offset_bottom = 128.0
 
 [node name="timer_label" type="Label" parent="."]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 40.0
+offset_top = 64.0
 offset_right = 128.0
-offset_bottom = 88.0
+offset_bottom = 112.0
+theme_override_font_sizes/font_size = 32
 text = "00:00.0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="decrease_speed_label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 136.0
-offset_top = 32.0
-offset_right = 184.0
-offset_bottom = 58.0
+offset_left = 48.0
+offset_top = 104.0
+offset_right = 80.0
+offset_bottom = 130.0
 text = "[X0]"
+
+[node name="header_label" type="Label" parent="."]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 128.0
+offset_bottom = 58.0
+text = "Time Left:"
+horizontal_alignment = 1
 
 [node name="alert_icon" type="TextureRect" parent="."]
 layout_mode = 0
@@ -46,7 +55,7 @@ offset_bottom = 120.0
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 184.0
+offset_right = 248.0
 offset_bottom = 24.0
 step = 1.0
 show_percentage = false

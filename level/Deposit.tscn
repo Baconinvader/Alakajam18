@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://bfcpr560uolhm"]
+
+[ext_resource type="PackedScene" uid="uid://c7bbw414ifh0b" path="res://assets/theme/Lootable.tscn" id="1_130js"]
+[ext_resource type="Texture2D" uid="uid://d1k4jocamr1bu" path="res://assets/visual/objects/deposit_box_closed.png" id="2_ttjx4"]
+[ext_resource type="Texture2D" uid="uid://bf572g7asgsv1" path="res://assets/visual/objects/deposit_box_open.png" id="3_32pp6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yoyyf"]
+size = Vector2(64, 68)
+
+[node name="Deposit" instance=ExtResource("1_130js")]
+spawn_options = Array[String](["res://items/BanknotesLarge.tscn", "res://items/Banknotes.tscn", "res://items/Banknotes.tscn", "res://items/Banknotes.tscn", "res://items/Coins.tscn"])
+unlooted_texture = ExtResource("2_ttjx4")
+looted_texture = ExtResource("3_32pp6")
+max_hold_time = 2.0
+
+[node name="sprite" parent="." index="1"]
+texture = ExtResource("2_ttjx4")
+
+[node name="collision" parent="." index="2"]
+position = Vector2(0, 30)
+shape = SubResource("RectangleShape2D_yoyyf")

@@ -45,6 +45,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	super._process(delta)
 	if not g.in_game:
 		return
 		
@@ -109,7 +110,12 @@ func _unhandled_input(event):
 		
 func reset():
 	health = max_health
+	prone = false
+	money = 0
 	#TODO position
 		
 func die():
 	g.main.gameover()
+
+func play_footsteps():
+	pass

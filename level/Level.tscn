@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://wvg1r1x051ou"]
+[gd_scene load_steps=13 format=3 uid="uid://wvg1r1x051ou"]
 
 [ext_resource type="Script" path="res://level/Level.gd" id="1_k3dbh"]
 [ext_resource type="TileSet" uid="uid://cmacsvf2tqv6w" path="res://assets/visual/tileset1.tres" id="2_xjwtc"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://ci7pe1q1n531f" path="res://entities/Concealer.tscn" id="6_ay8lf"]
 [ext_resource type="PackedScene" uid="uid://bxpvlfe3rusyo" path="res://level/Hideable.tscn" id="7_5wlc0"]
 [ext_resource type="PackedScene" uid="uid://bcskf4tmq2mye" path="res://level/LockedDoor.tscn" id="8_edg5v"]
+[ext_resource type="PackedScene" uid="uid://bfcpr560uolhm" path="res://level/Deposit.tscn" id="9_0tit3"]
+[ext_resource type="PackedScene" uid="uid://crvxwfyb31nbb" path="res://level/Vault.tscn" id="10_ijbgg"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_k3dbh")
@@ -26,9 +28,15 @@ starting_patrol_point = NodePath("../patrol1/1")
 
 [node name="CameraEnemy" parent="." instance=ExtResource("4_0yuss")]
 position = Vector2(128, 288)
+reverse_patrol = false
+suspicion_time = 0.5
+attack_type = "ranged"
+fire_time = 1.5
+alert_time = 0.4
+direction = 0.0
 
 [node name="MerchantBox" parent="." instance=ExtResource("4_hoyut")]
-position = Vector2(160, 32)
+position = Vector2(-120, -568)
 disable_mode = 2
 
 [node name="Concealer" parent="." instance=ExtResource("6_ay8lf")]
@@ -39,6 +47,15 @@ position = Vector2(-136, -296)
 
 [node name="LockedDoor" parent="." instance=ExtResource("8_edg5v")]
 position = Vector2(640, -256)
+
+[node name="Deposit" parent="." instance=ExtResource("9_0tit3")]
+position = Vector2(568, -440)
+
+[node name="Deposit2" parent="." instance=ExtResource("9_0tit3")]
+position = Vector2(672, -440)
+
+[node name="Vault" parent="." instance=ExtResource("10_ijbgg")]
+position = Vector2(384, -456)
 
 [node name="patrol1" type="Node2D" parent="."]
 
@@ -79,3 +96,6 @@ spawn_options = Array[String](["res://items/Key.tscn"])
 [node name="5" parent="spawners" instance=ExtResource("5_1oloi")]
 position = Vector2(224, -352)
 spawn_options = Array[String](["res://items/Key.tscn"])
+
+[node name="darkness" type="CanvasModulate" parent="."]
+color = Color(0.298039, 0.298039, 0.298039, 1)

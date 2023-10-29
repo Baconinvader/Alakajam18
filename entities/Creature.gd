@@ -13,6 +13,11 @@ class_name Creature
 @export var max_health:int = 5
 @onready var health:int = max_health
 
+var moving = false
+
+var stacked_target_path:Array
+var stacked_target:Entity
+
 var target_path:Array
 var last_target_pos: set=_set_last_target_pos
 var target:Entity
@@ -107,6 +112,21 @@ func set_target_pos(pos:Vector2):
 	#print(target_path)
 	target_path = path
 
+func stack_target():
+	stacked_target = target
+	stacked_target_path = target_path
+	target = null
+	target_path = []
+
+func unstack_target():
+	if stacked_target:
+		target = stacked_target
+		stacked_target = null
+	
+	if stacked_target_path:
+		target_path = stacked_target_path
+		stacked_target_path = [null]
+
 func set_target(entity:Entity):
 	if target != entity:
 		last_target_pos = null
@@ -135,7 +155,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if not g.in_game:
+		moving = false
 		return
+	moving = false
 		
 	if not g.angles_similar(direction, target_direction):
 		direction = g.rotate_to(direction, target_direction, turn_speed *delta)
@@ -188,6 +210,8 @@ func on_reached_target():
 		
 func move(move_vec:Vector2, delta:float):
 	if move_vec != Vector2.ZERO:
+		moving = true
+		
 		queue_redraw()
 		
 		move_vec *= speed*delta
@@ -207,6 +231,7 @@ func change_health(amount:int):
 	
 	var text_colour:Color
 	if amount <= 0:
+		$hit_sound.play()
 		text_colour = Color.RED
 		modulate = Color.WHITE
 		var damage_colour:Color = Color.FIREBRICK
@@ -227,3 +252,12 @@ func change_health(amount:int):
 		
 func die():
 	queue_free()
+
+
+func _on_footstep_timer_timeout():
+	if moving:
+		play_footsteps()
+		
+func play_footsteps():
+	var rval:int = randi_range(1,3)
+	get_node("footstep%s_sound" % rval).play()

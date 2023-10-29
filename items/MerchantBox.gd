@@ -1,11 +1,12 @@
 extends Interactable
 
+func _ready():
+	g.player.position = position + $player_spawn_point.position
+
 func _get_can_interact() -> bool:
 	if g.inventory.items.is_empty():
 		return false
 	return true
-
-
 
 func interact():
 	super.interact()
@@ -21,7 +22,7 @@ func interact():
 		
 	g.player.money += value_sum
 	Indicator.spawn_indicator("+$"+str(value_sum), self, Color.YELLOW)
-			
+	$deposit_sound.play()
 
 func _on_interact_area_body_entered(body):
 	if body == g.player:

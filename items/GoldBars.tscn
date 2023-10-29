@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvs552mjenpt3"]
+
+[ext_resource type="PackedScene" uid="uid://dooqp1rjphbyb" path="res://items/Item.tscn" id="1_me0qt"]
+[ext_resource type="Texture2D" uid="uid://ckxcmr3as8mw3" path="res://assets/visual/item/gold_bars.png" id="2_1ugud"]
+
+[node name="GoldBars" instance=ExtResource("1_me0qt")]
+item_name = "GoldBars"
+texture = ExtResource("2_1ugud")
+value = 1000

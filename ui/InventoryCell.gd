@@ -9,5 +9,6 @@ func _set_item(val:Item):
 	if val:
 		$item.visible = true
 		$item.texture = val.texture
+		Indicator.spawn_indicator("+%s" % item.item_name, g.player, Color.GREEN)
 	else:
 		$item.visible = false

@@ -1,14 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://dsmwvkxrrx8cx"]
+[gd_scene load_steps=8 format=3 uid="uid://dsmwvkxrrx8cx"]
 
 [ext_resource type="PackedScene" uid="uid://jf2x5l287h4w" path="res://entities/Entity.tscn" id="1_68afa"]
 [ext_resource type="Script" path="res://items/Interactable.gd" id="2_5v671"]
 [ext_resource type="Texture2D" uid="uid://dqkpdaebthmyq" path="res://assets/visual/icons/interact.png" id="2_sa2py"]
+[ext_resource type="Texture2D" uid="uid://c4emsw40mp6oe" path="res://assets/visual/ui/circle_over.png" id="4_amobf"]
+[ext_resource type="Texture2D" uid="uid://cnogc1vb7vpur" path="res://assets/visual/ui/circle_progress.png" id="5_y2uhb"]
+[ext_resource type="AudioStream" uid="uid://dw06jpwkgdq0" path="res://assets/audio/open_start.wav" id="6_sm644"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cifrd"]
 radius = 96.0
 
 [node name="Interactable" instance=ExtResource("1_68afa")]
 script = ExtResource("2_5v671")
+max_hold_time = 0.0
 
 [node name="interact_area" type="Area2D" parent="." index="0"]
 
@@ -25,6 +29,20 @@ autostart = true
 
 [node name="sprite" type="Sprite2D" parent="icon" index="1"]
 texture = ExtResource("2_sa2py")
+
+[node name="hold_bar" type="TextureProgressBar" parent="." index="4"]
+offset_left = -16.0
+offset_top = -80.0
+offset_right = 16.0
+offset_bottom = -48.0
+max_value = 1.0
+step = 0.1
+fill_mode = 4
+texture_over = ExtResource("4_amobf")
+texture_progress = ExtResource("5_y2uhb")
+
+[node name="start_interact_sound" type="AudioStreamPlayer2D" parent="." index="5"]
+stream = ExtResource("6_sm644")
 
 [connection signal="body_entered" from="interact_area" to="." method="_on_interact_area_body_entered"]
 [connection signal="body_exited" from="interact_area" to="." method="_on_interact_area_body_exited"]

@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7bbw414ifh0b"]
+
+[ext_resource type="PackedScene" uid="uid://dsmwvkxrrx8cx" path="res://items/Interactable.tscn" id="1_rkn73"]
+[ext_resource type="Script" path="res://assets/theme/Lootable.gd" id="2_xie6k"]
+[ext_resource type="Texture2D" uid="uid://c0l6ioo288hj8" path="res://assets/visual/item/money_band.png" id="3_1r3h1"]
+[ext_resource type="AudioStream" uid="uid://ch88447fyavfq" path="res://assets/audio/open.wav" id="3_jk2lw"]
+[ext_resource type="Texture2D" uid="uid://bt3vtn35cwo0t" path="res://assets/visual/area_light.png" id="5_kanou"]
+
+[node name="Lootable" instance=ExtResource("1_rkn73")]
+script = ExtResource("2_xie6k")
+spawn_options = Array[String]([])
+unlooted_texture = null
+looted_texture = null
+max_hold_time = 1.0
+
+[node name="band_icon" type="Sprite2D" parent="." index="4"]
+texture = ExtResource("3_1r3h1")
+
+[node name="band_stretch" type="Timer" parent="." index="5"]
+wait_time = 2.0
+autostart = true
+
+[node name="open_sound" type="AudioStreamPlayer2D" parent="." index="7"]
+stream = ExtResource("3_jk2lw")
+
+[node name="light" type="PointLight2D" parent="." index="9"]
+color = Color(0, 0.807843, 0, 1)
+texture = ExtResource("5_kanou")

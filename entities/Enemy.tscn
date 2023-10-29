@@ -1,10 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://bbwhiusxcraa1"]
+[gd_scene load_steps=15 format=3 uid="uid://bbwhiusxcraa1"]
 
 [ext_resource type="PackedScene" uid="uid://bb26y78ash1eg" path="res://entities/Creature.tscn" id="1_vg2aq"]
 [ext_resource type="Script" path="res://entities/Enemy.gd" id="2_dsyds"]
 [ext_resource type="Texture2D" uid="uid://bpji2q0mcvt24" path="res://assets/visual/spr_test_enemy.png" id="2_ynike"]
 [ext_resource type="Texture2D" uid="uid://cvaxxavh8koky" path="res://assets/visual/icons/alert.png" id="4_dv3if"]
 [ext_resource type="Texture2D" uid="uid://chmyikquanuuh" path="res://assets/visual/muzzle_flash.png" id="5_qgdu4"]
+[ext_resource type="AudioStream" uid="uid://c0gvouu6x5vv7" path="res://assets/audio/shoot.wav" id="6_q3kb3"]
+[ext_resource type="AudioStream" uid="uid://ykdodi51pv7u" path="res://assets/audio/hostile.wav" id="7_1ahid"]
+[ext_resource type="AudioStream" uid="uid://cyvfauvd4gxaj" path="res://assets/audio/suspicious.wav" id="8_ovsdu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0w22n"]
 atlas = ExtResource("5_qgdu4")
@@ -54,13 +57,13 @@ radius = 16.0
 motion_mode = 1
 script = ExtResource("2_dsyds")
 reverse_patrol = false
-suspicion_time = 0.5
+suspicion_time = 1.0
 hostile_time = 1.0
 attack_type = "ranged"
 min_range = 196
 fire_cooldown = 2.0
-fire_time = 1.5
-alert_time = 0.4
+fire_time = 1.0
+alert_time = 0.5
 damage = 1
 base_speed = 96
 chase_speed = 128
@@ -85,7 +88,6 @@ offset_top = -56.0
 offset_right = 56.0
 offset_bottom = -40.0
 max_value = 1.0
-step = 0.1
 value = 0.5
 show_percentage = false
 
@@ -96,7 +98,6 @@ offset_top = -80.0
 offset_right = 56.0
 offset_bottom = -64.0
 max_value = 10.0
-step = 1.0
 value = 5.0
 show_percentage = false
 
@@ -124,6 +125,15 @@ autostart = true
 [node name="stuck_timer" type="Timer" parent="." index="7"]
 wait_time = 2.0
 one_shot = true
+
+[node name="shoot_sound" type="AudioStreamPlayer2D" parent="." index="13"]
+stream = ExtResource("6_q3kb3")
+
+[node name="hostile_sound" type="AudioStreamPlayer2D" parent="." index="14"]
+stream = ExtResource("7_1ahid")
+
+[node name="suspicious_sound" type="AudioStreamPlayer2D" parent="." index="15"]
+stream = ExtResource("8_ovsdu")
 
 [connection signal="animation_finished" from="sprite/muzzle_flash" to="." method="_on_muzzle_flash_animation_finished"]
 [connection signal="animation_looped" from="sprite/muzzle_flash" to="." method="_on_muzzle_flash_animation_looped"]

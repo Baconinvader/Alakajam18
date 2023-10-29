@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxpvlfe3rusyo"]
+[gd_scene load_steps=8 format=3 uid="uid://bxpvlfe3rusyo"]
 
 [ext_resource type="PackedScene" uid="uid://dsmwvkxrrx8cx" path="res://items/Interactable.tscn" id="1_wsetu"]
 [ext_resource type="Script" path="res://Hideable.gd" id="2_87o28"]
 [ext_resource type="Texture2D" uid="uid://ynn7rdqwoiq2" path="res://assets/visual/objects/locker.png" id="3_vta8l"]
+[ext_resource type="AudioStream" uid="uid://cgcahlfmnqbp2" path="res://assets/audio/locker_in.wav" id="4_tk1ul"]
+[ext_resource type="AudioStream" uid="uid://c6a6evl362jxd" path="res://assets/audio/locker_out.wav" id="5_4gw6e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_38hw2"]
 size = Vector2(112, 168)
@@ -29,3 +31,9 @@ one_shot = true
 
 [node name="exit" type="Marker2D" parent="." index="5"]
 position = Vector2(0, 104)
+
+[node name="hide_in_sound" type="AudioStreamPlayer2D" parent="." index="8"]
+stream = ExtResource("4_tk1ul")
+
+[node name="hide_out_sound" type="AudioStreamPlayer2D" parent="." index="9"]
+stream = ExtResource("5_4gw6e")

@@ -15,7 +15,7 @@ func _ready():
 func set_nav_disabled(val:bool):
 	#print(nav_id," ",val)
 	g.level.nav.set_point_disabled(nav_id, val)
-	$sprite.visible = not val
+	#$sprite.visible = not val
 
 static func create_from_tile_dat(dat:TileData) -> TileDat:
 	var tile = preload("res://level/TileDat.tscn").instantiate()

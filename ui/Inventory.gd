@@ -23,6 +23,7 @@ func try_add_item(item:Item) -> bool:
 	if items.size() >= inventory_size:
 		return false
 	items.append(item)
+	Sound.play_sound("pickup")
 	update_cells()
 	return true
 	

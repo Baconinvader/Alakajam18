@@ -16,24 +16,24 @@ script = ExtResource("1_ha00i")
 [node name="Inventory" parent="UI" instance=ExtResource("2_efjyc")]
 anchor_right = 0.167
 anchor_bottom = 0.099
-offset_top = 512.0
-offset_right = 959.616
-offset_bottom = 575.848
+offset_left = 8.0
+offset_top = 680.0
+offset_right = 967.8
+offset_bottom = 806.9
 theme = ExtResource("3_5dyge")
 
 [node name="MoneyView" parent="UI" instance=ExtResource("3_wqiu2")]
 anchors_preset = -1
 anchor_right = 0.229
 anchor_bottom = 0.099
-offset_left = 224.0
-offset_right = 224.192
+offset_left = 256.0
+offset_right = 256.192
 offset_bottom = -0.152008
 theme = ExtResource("3_5dyge")
 
 [node name="HealthView" parent="UI" instance=ExtResource("4_h24wv")]
 offset_left = 832.0
 offset_right = 831.744
-theme = ExtResource("3_5dyge")
 
 [node name="TimerView" parent="UI" instance=ExtResource("5_jjtry")]
 offset_bottom = -0.304001

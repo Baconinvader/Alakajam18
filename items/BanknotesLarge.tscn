@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm2n0va5t6g0h"]
+
+[ext_resource type="PackedScene" uid="uid://dooqp1rjphbyb" path="res://items/Item.tscn" id="1_w72n2"]
+[ext_resource type="Texture2D" uid="uid://diiqep26cnrue" path="res://assets/visual/item/backnotes_large.png" id="2_3r83m"]
+
+[node name="BanknotesLarge" instance=ExtResource("1_w72n2")]
+item_name = "Banknotes Large"
+texture = ExtResource("2_3r83m")
+value = 500

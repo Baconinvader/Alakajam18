@@ -13,6 +13,8 @@ func interact():
 	if concealing_player:
 		g.player.visible = false
 		g.player.position = position
+		$hide_in_sound.play()
 	else:
 		g.player.visible = true
 		g.player.position = position + $exit.position
+		$hide_out_sound.play()

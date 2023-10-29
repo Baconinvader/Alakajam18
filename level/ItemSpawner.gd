@@ -14,11 +14,13 @@ func _set_item(val:Item):
 			$money_icon.visible = false
 		else:
 			$money_icon.visible = true
+		$light.visible = true
 	else:
 		$item_sprite.visible = false
 		$money_icon.visible = false
 		if respawn_time:
 			$respawn_timer.start()
+		$light.visible = false
 
 
 func _ready():

@@ -1,14 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://cb034yo0sonaa"]
+[gd_scene load_steps=7 format=3 uid="uid://cb034yo0sonaa"]
 
 [ext_resource type="PackedScene" uid="uid://bbwhiusxcraa1" path="res://entities/Enemy.tscn" id="1_t81v5"]
 [ext_resource type="Script" path="res://entities/CameraEnemy.gd" id="2_3x1h4"]
 [ext_resource type="Texture2D" uid="uid://yfxa3fi6400g" path="res://assets/visual/camera.png" id="2_hx7mn"]
 [ext_resource type="Texture2D" uid="uid://br8h0qrcfsxfp" path="res://assets/visual/camera_base.png" id="3_lrula"]
+[ext_resource type="AudioStream" uid="uid://c7gsu2lu16yjj" path="res://assets/audio/alarm.wav" id="5_jynbo"]
+[ext_resource type="Texture2D" uid="uid://ckk8yfxs1ih0m" path="res://assets/visual/lights/camera_light.png" id="6_y5wdi"]
 
 [node name="CameraEnemy" instance=ExtResource("1_t81v5")]
 collision_mask = 1
 script = ExtResource("2_3x1h4")
 alert_range = 1024
+default_angle = 0.0
+turn_fov = 2.94159
 
 [node name="base" type="Sprite2D" parent="." index="0"]
 position = Vector2(32, 0)
@@ -21,3 +25,12 @@ offset = Vector2(0, -32)
 
 [node name="alert_icon" parent="." index="5"]
 position = Vector2(0, -56)
+
+[node name="alarm_sound" type="AudioStreamPlayer2D" parent="." index="15"]
+stream = ExtResource("5_jynbo")
+volume_db = 10.0
+
+[node name="alarm_light" type="PointLight2D" parent="." index="17"]
+visible = false
+color = Color(1, 0, 0, 1)
+texture = ExtResource("6_y5wdi")

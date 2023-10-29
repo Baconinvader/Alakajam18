@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cdyw0a2kys132"]
+[gd_scene load_steps=12 format=3 uid="uid://cdyw0a2kys132"]
 
 [ext_resource type="PackedScene" uid="uid://dsmwvkxrrx8cx" path="res://items/Interactable.tscn" id="1_msadv"]
 [ext_resource type="Script" path="res://items/MerchantBox.gd" id="2_6tcjf"]
 [ext_resource type="Texture2D" uid="uid://yu2jl677cglt" path="res://assets/visual/merchant_box_door_left.png" id="3_rrff2"]
 [ext_resource type="Texture2D" uid="uid://cg6j40q38y28w" path="res://assets/visual/objects/door_entryway.png" id="4_m20nt"]
+[ext_resource type="Texture2D" uid="uid://dodccctgtfr56" path="res://assets/visual/lights/merchant_light.png" id="5_q8o32"]
+[ext_resource type="AudioStream" uid="uid://dfqvmd7k3rcdb" path="res://assets/audio/deposit.wav" id="5_snho5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xl421"]
 size = Vector2(144, 168)
@@ -146,7 +148,6 @@ region_rect = Rect2(0, 0, 64, 128)
 texture = ExtResource("4_m20nt")
 
 [node name="collision" parent="." index="3"]
-visible = false
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_0lhrk")
 
@@ -162,7 +163,18 @@ text = "Deposit"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="anims" type="AnimationPlayer" parent="." index="5"]
+[node name="player_spawn_point" type="Marker2D" parent="." index="5"]
+position = Vector2(0, 160)
+
+[node name="light" type="PointLight2D" parent="." index="6"]
+position = Vector2(0, 64)
+color = Color(1, 0, 1, 1)
+texture = ExtResource("5_q8o32")
+
+[node name="anims" type="AnimationPlayer" parent="." index="7"]
 libraries = {
 "": SubResource("AnimationLibrary_yt52n")
 }
+
+[node name="deposit_sound" type="AudioStreamPlayer2D" parent="." index="9"]
+stream = ExtResource("5_snho5")

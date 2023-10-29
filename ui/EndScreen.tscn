@@ -11,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_iorda")
 script = ExtResource("1_42blo")
 
 [node name="background" type="TextureRect" parent="."]
@@ -31,9 +32,9 @@ text = "Back To Menu"
 visible = false
 layout_mode = 0
 offset_left = 672.0
-offset_top = 440.0
+offset_top = 576.0
 offset_right = 930.0
-offset_bottom = 515.0
+offset_bottom = 651.0
 theme = ExtResource("2_iorda")
 theme_override_font_sizes/font_size = 64
 text = "[NOMONEY]"
@@ -43,21 +44,33 @@ horizontal_alignment = 1
 visible = false
 layout_mode = 0
 offset_left = 640.0
-offset_top = 40.0
+offset_top = 176.0
 offset_right = 1020.0
-offset_bottom = 115.0
+offset_bottom = 251.0
 theme = ExtResource("2_iorda")
 theme_override_font_sizes/font_size = 64
 text = "ITEMS OBTAINED:
 "
 horizontal_alignment = 1
 
+[node name="gameover_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 512.0
+offset_top = 48.0
+offset_right = 1096.0
+offset_bottom = 123.0
+theme = ExtResource("2_iorda")
+theme_override_font_sizes/font_size = 64
+text = "Game Over [NOREASON]
+"
+horizontal_alignment = 1
+
 [node name="sold_items" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 64.0
-offset_top = 128.0
-offset_right = 1536.0
-offset_bottom = 384.0
+offset_left = 72.0
+offset_top = 296.0
+offset_right = 1544.0
+offset_bottom = 552.0
 alignment = 1
 
 [connection signal="pressed" from="start_button" to="." method="_on_start_button_pressed"]

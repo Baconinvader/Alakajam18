@@ -15,6 +15,7 @@ theme = ExtResource("1_o8oho")
 script = ExtResource("1_e4ghn")
 
 [node name="background" type="TextureRect" parent="."]
+layout_mode = 0
 offset_right = 1600.0
 offset_bottom = 900.0
 texture = ExtResource("3_62osi")

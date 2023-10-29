@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://crvxwfyb31nbb"]
+
+[ext_resource type="PackedScene" uid="uid://c7bbw414ifh0b" path="res://assets/theme/Lootable.tscn" id="1_0pkub"]
+[ext_resource type="Texture2D" uid="uid://w0pskxq14n7i" path="res://assets/visual/objects/vault_closed.png" id="2_xb3cn"]
+[ext_resource type="Texture2D" uid="uid://238ywkbv0rp8" path="res://assets/visual/objects/vault_open.png" id="3_l62qe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_snnmm"]
+size = Vector2(128, 128)
+
+[node name="Vault" instance=ExtResource("1_0pkub")]
+spawn_options = Array[String](["res://items/GoldBars.tscn", "res://items/BanknotesLarge.tscn", "res://items/BanknotesLarge.tscn"])
+unlooted_texture = ExtResource("2_xb3cn")
+looted_texture = ExtResource("3_l62qe")
+max_hold_time = 5.0
+
+[node name="sprite" parent="." index="1"]
+texture = ExtResource("2_xb3cn")
+
+[node name="collision" parent="." index="2"]
+shape = SubResource("RectangleShape2D_snnmm")

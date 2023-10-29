@@ -2,6 +2,9 @@ extends Enemy
 
 @export var alert_range:int = 1024
 
+@export var default_angle:float = 0
+@export var turn_fov:float = PI-0.2
+
 func finish_alert(new_target:Entity, target_state:CreatureState):
 	state = target_state
 	next_state = CreatureState.NONE
@@ -16,7 +19,18 @@ func finish_alert(new_target:Entity, target_state:CreatureState):
 		target = null
 		
 func do_alert():
+	$alarm_sound.play()
+	$alarm_light.visible = true
+	var light_tween:Tween = create_tween()
+	light_tween.tween_property($alarm_light, "energy", 2, 2.0)
+	light_tween.tween_property($alarm_light, "energy", 0, 2.0)
+	light_tween.tween_property($alarm_light, "visible", false, 0.0)
+	
+	var light_tween2:Tween = create_tween()
+	light_tween2.tween_property($alarm_light, "rotation", 2*PI, 4.0)
+	
 	for enemy in get_tree().get_nodes_in_group("enemies"):
+		
 		var dist = (enemy.position - position).length()
 		if dist <= alert_range:
 			if enemy.state == Enemy.CreatureState.NONE or enemy.state == Enemy.CreatureState.UNALERTED:
@@ -26,6 +40,9 @@ func do_alert():
 		
 func on_reached_target():
 	pass
+
+func can_turn_to(angle:float) -> bool:
+	return g.angle_in_bounds(angle, default_angle-(turn_fov*0.5), default_angle+(turn_fov*0.5))
 
 func update_state(delta):
 	var attention_entity:Entity
@@ -57,11 +74,13 @@ func update_state(delta):
 					state_change(attention_entity, CreatureState.HOSTILE)
 				else:
 					var angle = (target.position-position).angle()
-					target_direction = angle
+					if can_turn_to(angle):
+						target_direction = angle
 					
 			elif state == CreatureState.HOSTILE:
 				var angle = (target.position-position).angle()
-				target_direction = angle
+				if can_turn_to(angle):
+					target_direction = angle
 				
 
 		else:

@@ -18,12 +18,18 @@ func _process(delta):
 		var seconds:int = fmod( g.time_left, 60.)
 		var frac_sec = g.time_left-int(g.time_left)
 		
-		time_string = "%s:%s.%s" % [minutes, seconds, int(frac_sec*10)]
+		time_string = "%02d:%02d.%01d" % [minutes, seconds, int(frac_sec*10)]
 		
 	
 func _physics_process(_delta):
 	$timer_label.text = time_string
 	$decrease_speed_label.text = "x%s" % g.time_decrease_speed
+	
+	if g.time_decrease_speed > 1.0:
+		$decrease_speed_label.modulate = Color.RED
+	else:
+		$decrease_speed_label.modulate = Color.WHITE
+		
 	$progress.value = g.time_left
 	
 	if g.time_left <= 10:

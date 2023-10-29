@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bb26y78ash1eg"]
+[gd_scene load_steps=8 format=3 uid="uid://bb26y78ash1eg"]
 
 [ext_resource type="PackedScene" uid="uid://jf2x5l287h4w" path="res://entities/Entity.tscn" id="1_81ni3"]
 [ext_resource type="Script" path="res://entities/Creature.gd" id="2_sd18e"]
+[ext_resource type="AudioStream" uid="uid://c0pl6ticgjr74" path="res://assets/audio/footstep1.wav" id="3_fyyuy"]
+[ext_resource type="AudioStream" uid="uid://phqc45vkplax" path="res://assets/audio/footstep2.wav" id="4_kl76a"]
+[ext_resource type="AudioStream" uid="uid://bdahhict4bkyv" path="res://assets/audio/footstep3.wav" id="5_nmw50"]
+[ext_resource type="AudioStream" uid="uid://q8u5bo1keuol" path="res://assets/audio/hit.wav" id="6_eabku"]
+[ext_resource type="Texture2D" uid="uid://bt3vtn35cwo0t" path="res://assets/visual/area_light.png" id="7_5w0pf"]
 
 [node name="Creature" instance=ExtResource("1_81ni3")]
 collision_mask = 3
@@ -12,3 +17,32 @@ turn_speed = 3.14159
 fov = 1.55
 view_range = 512.0
 max_health = 5
+
+[node name="footstep_timer" type="Timer" parent="." index="2"]
+wait_time = 0.5
+autostart = true
+
+[node name="footstep1_sound" type="AudioStreamPlayer2D" parent="." index="3"]
+stream = ExtResource("3_fyyuy")
+max_distance = 1000.0
+attenuation = 0.133972
+
+[node name="footstep2_sound" type="AudioStreamPlayer2D" parent="." index="4"]
+stream = ExtResource("4_kl76a")
+max_distance = 1000.0
+attenuation = 0.133972
+
+[node name="footstep3_sound" type="AudioStreamPlayer2D" parent="." index="5"]
+stream = ExtResource("5_nmw50")
+max_distance = 1000.0
+attenuation = 0.133972
+
+[node name="hit_sound" type="AudioStreamPlayer2D" parent="." index="6"]
+stream = ExtResource("6_eabku")
+
+[node name="light" type="PointLight2D" parent="." index="7"]
+energy = 0.5
+texture = ExtResource("7_5w0pf")
+texture_scale = 2.0
+
+[connection signal="timeout" from="footstep_timer" to="." method="_on_footstep_timer_timeout"]

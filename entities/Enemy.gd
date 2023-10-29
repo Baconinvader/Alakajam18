@@ -90,9 +90,9 @@ func _draw():
 			
 			draw_line(pos, res.position-position, Color.ORANGE, 2 )
 	
-	#for point in target_path:
-	#	var rel_point = point-position
-	#	draw_circle(rel_point, 16, Color.DARK_RED)
+	for point in target_path:
+		var rel_point = point-position
+		draw_circle(rel_point, 16, Color.DARK_RED)
 
 func start_patrol():
 	if starting_patrol_point:
@@ -122,22 +122,30 @@ func state_change(new_target:Entity, target_state:CreatureState):
 		
 	var callable = finish_alert.bindv([new_target, target_state])
 	tween.tween_callback(callable)
-	tween.tween_property($alert_icon, "visible", false, 0.1)
+	if target_state != CreatureState.HOSTILE and target_state != CreatureState.FIRING:
+		tween.tween_property($alert_icon, "visible", false, 0.1)
 	
 func finish_alert(new_target:Entity, target_state:CreatureState):
 	state = target_state
 	next_state = CreatureState.NONE
+	
+	if state == CreatureState.HOSTILE:
+		$hostile_sound.play()
+	
 	if state == CreatureState.SUSPICIOUS:
 		set_target(new_target)
+		$suspicious_sound.play()
 		
 	if state == CreatureState.UNALERTED:
 		start_patrol()
 		
 	if state == CreatureState.FIRING:
 		state = CreatureState.HOSTILE
+		unstack_target()
 		
 		$sprite/muzzle_flash.visible = true
 		$sprite/muzzle_flash.play("fire")
+		
 		#$sprite/muzzle_flash.rotation = direction
 		
 		#var r = starting_muzzle_flash_pos.length()
@@ -145,7 +153,7 @@ func finish_alert(new_target:Entity, target_state:CreatureState):
 		#phi += rotation
 		#$muzzle_flash.position = Vector2.from_angle(phi) * r
 		
-		
+		$shoot_sound.play()
 		$fire_cooldown.start()
 		if get_ray_entity(target):
 			target.change_health(-damage)
@@ -220,9 +228,12 @@ func update_state(delta):
 				if target and min_range:
 					var dist = (target.position - position).length()
 					if dist <= min_range:
-						target_path.clear()
+						
 						var angle = (target.position-position).angle()
 						target_direction = angle
+						
+						stack_target()
+						target = stacked_target
 						
 						if not $fire_cooldown.time_left:
 							state_change(attention_entity, CreatureState.FIRING)
