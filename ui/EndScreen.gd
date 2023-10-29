@@ -26,7 +26,7 @@ func _ready():
 		reveal_tween.tween_callback(add_child_bind)
 		
 	reveal_tween.tween_interval(1.0)
-	reveal_tween.tween_property($money_label, "text", "Final Earnings: %s" % g.player.money, 0.0)
+	reveal_tween.tween_property($money_label, "text", "Final Earnings: $%s" % g.player.money, 0.0)
 	reveal_tween.tween_property($money_label, "visible", true, 0.5)
 	
 

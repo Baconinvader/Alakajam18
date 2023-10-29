@@ -7,16 +7,21 @@ func _ready():
 	g.inventory = $UI/Inventory
 	g.overlay = $overlay
 	
-	add_child(g.player)
+	
 	
 	var start_screen = preload("res://ui/StartScreen.tscn").instantiate()
 	$UI.add_child(start_screen)
 
 func start_game():
 	if g.level:
+		g.level.remove_child(g.player)
 		g.level.queue_free()
 		
 	g.level = preload("res://level/Level.tscn").instantiate()
+	g.level.add_child(g.player)
+	
+	g.level.move_child(g.player, 1)
+	
 	add_child(g.level)
 	g.time_left = g.max_time
 	g.in_game = true

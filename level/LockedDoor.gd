@@ -6,8 +6,10 @@ var locked:bool = true
 
 func interact():
 	locked = false
+	g.inventory.keys -= 1
 	$collision.disabled = true
 	$anims.play("open")
+	$open_sound.play()
 	obscure_nav(false)
 
 func _physics_process(_delta):

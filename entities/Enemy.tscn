@@ -68,7 +68,7 @@ fire_time = 1.0
 alert_time = 0.5
 damage = 1
 base_speed = 96
-chase_speed = 128
+chase_speed = 156
 speed = 100.0
 
 [node name="sprite" parent="." index="0"]

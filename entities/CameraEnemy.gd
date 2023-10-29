@@ -7,6 +7,13 @@ extends Enemy
 
 var alerting:bool = false
 
+func _ready():
+	super._ready()
+	$base.rotation = default_angle
+	direction = default_angle
+	target_direction = default_angle
+	$sprite.rotation = direction
+
 func finish_state_change(new_target:Entity, target_state:CreatureState):
 	state = target_state
 	next_state = CreatureState.NONE

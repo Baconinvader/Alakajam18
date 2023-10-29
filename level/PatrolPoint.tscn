@@ -8,6 +8,7 @@
 script = ExtResource("1_cjay0")
 
 [node name="sprite" parent="." index="0"]
+visible = false
 texture = ExtResource("3_s4oej")
 
 [node name="collision" parent="." index="1"]

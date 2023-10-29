@@ -151,9 +151,6 @@ texture = ExtResource("4_m20nt")
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_0lhrk")
 
-[node name="icon" parent="." index="4"]
-visible = true
-
 [node name="Label" type="Label" parent="icon" index="2"]
 offset_left = -40.0
 offset_top = -56.0
@@ -175,6 +172,9 @@ texture = ExtResource("5_q8o32")
 libraries = {
 "": SubResource("AnimationLibrary_yt52n")
 }
+
+[node name="hold_bar" parent="." index="8"]
+visible = false
 
 [node name="deposit_sound" type="AudioStreamPlayer2D" parent="." index="9"]
 stream = ExtResource("5_snho5")

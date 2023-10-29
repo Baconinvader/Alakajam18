@@ -25,7 +25,7 @@ var stuck_tween:Tween = null
 @export var starting_patrol_point:PatrolPoint
 @export var reverse_patrol:bool = false
 
-@export var suspicion_time:float = 0.5
+@export var suspicion_time:float = 1.0
 @export var hostile_time:float = 1.0
 
 @export var attack_type:String = "ranged"
@@ -91,9 +91,9 @@ func _draw():
 				
 				draw_line(pos, res.position-position, Color.ORANGE, 2 )
 	
-	for point in target_path:
-		var rel_point = point-position
-		draw_circle(rel_point, 16, Color.DARK_RED)
+	#for point in target_path:
+	#	var rel_point = point-position
+	#	draw_circle(rel_point, 16, Color.DARK_RED)
 
 func start_patrol():
 	if starting_patrol_point:
@@ -169,6 +169,7 @@ func finish_state_change(new_target:Entity, target_state:CreatureState):
 		$fire_cooldown.start()
 		if get_ray_entity(target):
 			target.change_health(-damage)
+
 	
 func on_reached_target():
 	if target is PatrolPoint:

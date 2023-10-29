@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://crpjky3l5rybd"]
+
+[ext_resource type="PackedScene" uid="uid://ci7pe1q1n531f" path="res://entities/Concealer.tscn" id="1_l2eqv"]
+[ext_resource type="Texture2D" uid="uid://nmh718g6b2ut" path="res://assets/visual/objects/table_small.png" id="2_8cdft"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p871e"]
+size = Vector2(128, 64)
+
+[node name="TableSmall" instance=ExtResource("1_l2eqv")]
+
+[node name="sprite" parent="." index="0"]
+texture = ExtResource("2_8cdft")
+
+[node name="collision" parent="." index="1"]
+shape = SubResource("RectangleShape2D_p871e")

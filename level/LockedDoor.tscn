@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://bcskf4tmq2mye"]
+[gd_scene load_steps=11 format=3 uid="uid://bcskf4tmq2mye"]
 
 [ext_resource type="PackedScene" uid="uid://dsmwvkxrrx8cx" path="res://items/Interactable.tscn" id="1_2egnb"]
 [ext_resource type="Script" path="res://level/LockedDoor.gd" id="2_67we4"]
 [ext_resource type="Texture2D" uid="uid://0o5tb67aex3t" path="res://assets/visual/objects/door_single.png" id="4_6y5lx"]
 [ext_resource type="Texture2D" uid="uid://cg6j40q38y28w" path="res://assets/visual/objects/door_entryway.png" id="4_lgb5k"]
+[ext_resource type="AudioStream" uid="uid://objs84c5fgeh" path="res://assets/audio/door_open.wav" id="5_p3t8c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lbdeh"]
-size = Vector2(112, 168)
+size = Vector2(112, 200)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_emhi2"]
 size = Vector2(96, 74)
@@ -132,7 +133,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="shape" parent="interact_area" index="0"]
-position = Vector2(0, 20)
+position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_lbdeh")
 
 [node name="door_left" type="Sprite2D" parent="." index="2"]
@@ -159,3 +160,6 @@ shape = SubResource("RectangleShape2D_emhi2")
 libraries = {
 "": SubResource("AnimationLibrary_yt52n")
 }
+
+[node name="open_sound" type="AudioStreamPlayer2D" parent="." index="10"]
+stream = ExtResource("5_p3t8c")

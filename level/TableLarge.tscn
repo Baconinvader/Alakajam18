@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl12c3f10gfwm"]
+
+[ext_resource type="PackedScene" uid="uid://ci7pe1q1n531f" path="res://entities/Concealer.tscn" id="1_j3spb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7o376"]
+size = Vector2(256, 128)
+
+[node name="TableLarge" instance=ExtResource("1_j3spb")]
+
+[node name="collision" parent="." index="1"]
+shape = SubResource("RectangleShape2D_7o376")

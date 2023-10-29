@@ -29,11 +29,10 @@ offset_bottom = 832.0
 text = "Back To Menu"
 
 [node name="money_label" type="Label" parent="."]
-visible = false
 layout_mode = 0
-offset_left = 672.0
+offset_left = 560.0
 offset_top = 576.0
-offset_right = 930.0
+offset_right = 914.0
 offset_bottom = 651.0
 theme = ExtResource("2_iorda")
 theme_override_font_sizes/font_size = 64

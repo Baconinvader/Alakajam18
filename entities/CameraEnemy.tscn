@@ -13,11 +13,14 @@ script = ExtResource("2_3x1h4")
 alert_range = 1024
 default_angle = 0.0
 turn_fov = 2.94159
+hostile_time = 2.0
 fire_cooldown = 2.0
+turn_speed = 1.5
+fov = 0.785
 
 [node name="base" type="Sprite2D" parent="." index="0"]
-position = Vector2(32, 0)
 texture = ExtResource("3_lrula")
+offset = Vector2(32, 0)
 
 [node name="sprite" parent="." index="1"]
 texture = ExtResource("2_hx7mn")

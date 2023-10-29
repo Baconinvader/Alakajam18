@@ -2,7 +2,7 @@ extends Control
 
 class_name Inventory
 
-@export var inventory_size:int = 10
+@export var inventory_size:int = 5
 var keys:int = 0:set=_set_keys
 var items:Array = []
 
@@ -30,16 +30,31 @@ func try_add_item(item:Item) -> bool:
 	items.append(item)
 	Sound.play_sound("pickup")
 	update_cells()
+	
+	if items.size() == inventory_size:
+		Indicator.spawn_indicator("Inventory Full", g.player, Color.ORANGE)
+	
 	return true
 	
-func pop_item() -> Item:
+func pop_indicator(item_name:String):
+	Indicator.spawn_indicator("-%s"% item_name, g.player, Color.RED)
+	
+func pop_item(destroy:bool=false) -> Item:
 	if items.is_empty():
 		return null
 	
 	var popped_item:Item = items.pop_front()
-	sold_items.append(popped_item)
+	if destroy:
+		var indicator_tween:Tween = create_tween()
+		var spawn_indicator_call = pop_indicator.bind(popped_item.item_name)
+		indicator_tween.tween_interval(1.0)
+		indicator_tween.tween_callback(spawn_indicator_call)
+
+	else:
+		sold_items.append(popped_item)
 	update_cells()
 	return popped_item
+
 
 func _physics_process(delta):
 	$keys/label.text = "x%s" % keys

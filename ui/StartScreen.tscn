@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://b50k3tecnqna6"]
+[gd_scene load_steps=9 format=3 uid="uid://b50k3tecnqna6"]
 
 [ext_resource type="Script" path="res://ui/StartScreen.gd" id="1_e4ghn"]
 [ext_resource type="Theme" uid="uid://bgfucxe2x8b3y" path="res://assets/theme/main_theme.tres" id="1_o8oho"]
+[ext_resource type="Texture2D" uid="uid://deajpp3uw0oyi" path="res://assets/visual/ui/slides/tutorial_slide1.png" id="3_3nu10"]
 [ext_resource type="Texture2D" uid="uid://daxykym61y8py" path="res://assets/visual/background2.png" id="3_62osi"]
+[ext_resource type="Texture2D" uid="uid://cn2ba2b0um63f" path="res://assets/visual/ui/button_right.png" id="4_0nvor"]
+[ext_resource type="Texture2D" uid="uid://bowkum8v3y3aq" path="res://assets/visual/ui/slides/tutorial_slide2.png" id="4_ta003"]
+[ext_resource type="Texture2D" uid="uid://bbg0atsmahvxw" path="res://assets/visual/ui/button_left.png" id="5_unk1m"]
+[ext_resource type="Texture2D" uid="uid://bsigjvudqhsse" path="res://assets/visual/ui/button_exit.png" id="6_jsy03"]
 
 [node name="StartScreen" type="Control"]
 layout_mode = 3
@@ -13,6 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_o8oho")
 script = ExtResource("1_e4ghn")
+tutorial_slides = [ExtResource("3_3nu10"), ExtResource("4_ta003")]
 
 [node name="background" type="TextureRect" parent="."]
 layout_mode = 0
@@ -29,4 +35,52 @@ offset_bottom = 640.0
 theme_override_font_sizes/font_size = 64
 text = "Start"
 
+[node name="tutorial_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 704.0
+offset_right = 941.0
+offset_bottom = 784.0
+theme_override_font_sizes/font_size = 64
+text = "How to Play"
+
+[node name="tutorial" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="slide" type="TextureRect" parent="tutorial"]
+layout_mode = 0
+offset_right = 1600.0
+offset_bottom = 896.0
+
+[node name="right" type="TextureButton" parent="tutorial"]
+layout_mode = 0
+offset_left = 1488.0
+offset_top = 784.0
+offset_right = 1584.0
+offset_bottom = 880.0
+texture_normal = ExtResource("4_0nvor")
+
+[node name="left" type="TextureButton" parent="tutorial"]
+layout_mode = 0
+offset_left = 1296.0
+offset_top = 784.0
+offset_right = 1392.0
+offset_bottom = 880.0
+texture_normal = ExtResource("5_unk1m")
+
+[node name="exit" type="TextureButton" parent="tutorial"]
+layout_mode = 0
+offset_left = 1496.0
+offset_top = 8.0
+offset_right = 1592.0
+offset_bottom = 104.0
+texture_normal = ExtResource("6_jsy03")
+
 [connection signal="pressed" from="start_button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="tutorial_button" to="." method="_on_tutorial_button_pressed"]
+[connection signal="pressed" from="tutorial/right" to="." method="_on_right_pressed"]
+[connection signal="pressed" from="tutorial/left" to="." method="_on_left_pressed"]
+[connection signal="pressed" from="tutorial/exit" to="." method="_on_exit_pressed"]

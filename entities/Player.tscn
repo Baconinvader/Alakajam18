@@ -10,22 +10,42 @@ radius = 24.0
 
 [node name="Player" groups=["alerters"] instance=ExtResource("1_rwr4e")]
 script = ExtResource("2_dfd5j")
+speed = 156.0
 fov = 1.6
 
-[node name="sprite" parent="." index="0"]
+[node name="particles" type="CPUParticles2D" parent="." index="0"]
+emitting = false
+amount = 64
+lifetime = 1.2
+one_shot = true
+speed_scale = 2.0
+explosiveness = 0.8
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 20.0
+linear_accel_min = 8.0
+linear_accel_max = 8.0
+scale_amount_max = 2.0
+color = Color(0.760784, 0, 0, 1)
+
+[node name="sprite" parent="." index="1"]
 texture = null
 
 [node name="anim_sprite" type="AnimatedSprite2D" parent="sprite" index="0"]
 sprite_frames = ExtResource("3_1se77")
 animation = &"walk"
 
-[node name="camera" type="Camera2D" parent="." index="1"]
+[node name="camera" type="Camera2D" parent="." index="2"]
 
-[node name="collision" parent="." index="2"]
+[node name="collision" parent="." index="3"]
 shape = SubResource("CircleShape2D_p58lh")
 
-[node name="prone_icon" type="Sprite2D" parent="." index="3"]
+[node name="prone_icon" type="Sprite2D" parent="." index="4"]
 visible = false
 texture = ExtResource("3_ivron")
 
-[node name="concealer_sprite" type="Sprite2D" parent="." index="4"]
+[node name="concealer_sprite" type="Sprite2D" parent="." index="5"]
+
+[node name="light" parent="." index="11"]
+position = Vector2(-8, 0)

@@ -14,7 +14,7 @@ var prone:bool = false:set=_set_prone
 func _set_prone(val:bool):
 	if not is_concealed():
 		prone = val
-		$prone_icon.visible = prone
+		#$prone_icon.visible = prone
 		
 		if prone:
 			speed = base_speed*0.5
@@ -101,12 +101,16 @@ func _physics_process(_delta):
 func on_collide(res:KinematicCollision2D):
 	var collider = res.get_collider()
 	if collider is Enemy:
-		collider.set_target(self)
-		var angle = (position-collider.position).angle()
-		collider.target_direction  = angle
 		
-		position += Vector2.from_angle(angle)*0.5
-		
+		if collider.next_state != Enemy.CreatureState.HOSTILE:
+			collider.set_target(self)
+			var angle = (position-collider.position).angle()
+			collider.target_direction  = angle
+			
+			collider.state_change(self, Enemy.CreatureState.HOSTILE)
+			
+			position += Vector2.from_angle(angle)*0.5
+			
 func _unhandled_input(event):
 	#var me:InputEventMouseButton = event as InputEventMouseButton
 	#if me:
@@ -116,6 +120,12 @@ func _unhandled_input(event):
 
 	if event.is_action_pressed("prone"):
 		prone = not prone
+		
+func change_health(amount:int):
+	super.change_health(amount)
+	if amount < 0:
+		$particles.restart()
+		g.inventory.pop_item(true)
 		
 func reset():
 	health = max_health

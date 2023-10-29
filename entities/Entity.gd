@@ -39,18 +39,23 @@ func obscure_nav(disable:bool=true):
 	var ey:int = (position.y + ceili(rect.size.y/2)) / g.level.tileset.tile_size.y
 	
 	sx -= g.level.offset_x
-	sy -= g.level.offset_y
+	sy -= g.level.offset_y + 0.5
 	ex -= g.level.offset_x
-	ey -= g.level.offset_y
+	ey -= g.level.offset_y + 0.5
 	
+	print(sx,"->",ex," ",sy,"->",ey," ",disable)
 
 	var tile:TileDat
 	for x in range(sx,ex):
 		for y in range(sy,ey):
+			print(x," ",y)
 			if sx < 0 or sy < 0 or ex >= g.level.size_x or ey >= g.level.size_y:
+				print(x," ",y," cont")
 				continue
 					
+			
 			tile = g.level.tiles[x][y]
+			print(tile)
 			tile.set_nav_disabled(disable)
 	
 
